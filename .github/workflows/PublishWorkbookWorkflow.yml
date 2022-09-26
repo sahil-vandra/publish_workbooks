@@ -42,7 +42,7 @@ jobs:
 
       - name: Get changed files
         id: get-files
-        run: echo ::set-output name=files::$(git show --name-only --pretty="format:" --diff-filter=AM $(git rev-parse origin/feature) -- *.twbx -- *.twb | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | (","+.)')
+        run: echo ::set-output name=files::$(git show --name-only --pretty="format:" --diff-filter=AM $(git rev-parse origin/${{ github.head_ref }}) -- *.twbx -- *.twb | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | (","+.)')
 
       - name: Publish Workbook
         run: |
