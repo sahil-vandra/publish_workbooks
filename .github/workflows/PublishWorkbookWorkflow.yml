@@ -31,15 +31,6 @@ jobs:
           python -m pip install --upgrade pip 
           pip install tableauserverclient
 
-      - name: Step that prints name of pull request's base branch
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "Pull request's base branch is: ${BASE_BRANCH}"
-          echo ${{ github.base_ref }}
-          echo ${{ github.head_ref }}
-        env:
-            BASE_BRANCH: ${{ github.base_ref }}
-
       - name: Get changed files
         id: get-files
         run: echo ::set-output name=files::$(git show --name-only --pretty="format:" --diff-filter=AM $(git rev-parse origin/${{ github.head_ref }}) -- *.twbx -- *.twb | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | (","+.)')
