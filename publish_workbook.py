@@ -6,7 +6,7 @@ import json
 def main(args):
     print("\nproject_id ::", args.project_id)
     print("\ntype of project_id ::", type(args.project_id))
-    temp1 = "{" + args.project_id + "}"
+    temp1 = "{'workbooks': " + args.project_id + "}"
     print("\ntemp1 ::", temp1)
     print("\ntype temp1 ::", type(temp1))
     a = json.loads(temp1)
