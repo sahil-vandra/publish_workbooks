@@ -12,8 +12,6 @@ env:
 jobs:
   Publish:
     runs-on: ubuntu-latest
-    outputs:
-      changed_files: ${{ steps.get-files.outputs.files }}
 
     steps:
       - name: Checkout
@@ -31,16 +29,11 @@ jobs:
           python -m pip install --upgrade pip 
           pip install tableauserverclient==0.22
 
-      - name: Get changed files
-        id: get-files
-        run: echo ::set-output name=files::$(git show --name-only --pretty="format:" --diff-filter=AM $(git rev-parse origin/${{ github.head_ref }}) -- *.twbx -- *.twb | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | (","+.)')
-
       - name: Publish Workbook
         run: |
           project_id=`jq '.workbooks' project-id.json`
-          echo "Files list :: " "${{ steps.get-files.outputs.files }}"
-          if [ "${{ steps.get-files.outputs.files }}" != '' -a "$project_id" != ''  ];then
-              python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id "${project_id}" --password ${{env.PASS}} --username ${{env.UNAME}} --workbook_files "${{ steps.get-files.outputs.files }}"
+          if [ "$project_id" != '' ];then
+              python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id "${project_id}" --password ${{env.PASS}} --username ${{env.UNAME}}
           else
-              echo "TWBX or TWB file list is Empty or project id is not accessable."
+              echo "project id is not accessable."
           fi
