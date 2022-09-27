@@ -1,13 +1,13 @@
 {
   "workbooks": [
     {
-      "name": "film_workbook",
-      "file_path": "film_workbook.twb",
+      "name": "Sample",
+      "file_path": "Sample.twbx",
       "project_path": "Technology"
     },
     {
-      "name": "nz_venki",
-      "file_path": "NZ_Census.twbx",
+      "name": "Sales Growth Dashboard",
+      "file_path": "Sales Growth Dashboard.twbx",
       "project_path": "Default",
       "option": {
         "tags": ["sample", "temp"],
