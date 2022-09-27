@@ -40,7 +40,7 @@ jobs:
           project_id=`jq '.workbooks' project-id.json`
           echo "Files list :: " "${{ steps.get-files.outputs.files }}"
           if [ "${{ steps.get-files.outputs.files }}" != '' -a "$project_id" != ''  ];then
-              python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id ${project_id} --password ${{env.PASS}} --username ${{env.UNAME}} --workbook_files "${{ steps.get-files.outputs.files }}"
+              python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id "${project_id}" --password ${{env.PASS}} --username ${{env.UNAME}} --workbook_files "${{ steps.get-files.outputs.files }}"
           else
               echo "TWBX or TWB file list is Empty or project id is not accessable."
           fi
