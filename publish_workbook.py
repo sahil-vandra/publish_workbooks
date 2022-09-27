@@ -4,6 +4,7 @@ import tableauserverclient as TSC
 
 def main(args):
     print("\nproject_id ::", args.project_id)
+    print("\ntype of project_id ::", type(args.project_id))
     
     # wb_list = []
     # for wb in args.workbook_files.split(","):
