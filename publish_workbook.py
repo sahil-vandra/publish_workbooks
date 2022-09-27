@@ -9,7 +9,7 @@ def main(args):
     temp1 = "{" + args.project_id + "}"
     print("\ntemp1 ::", temp1)
     print("\ntype temp1 ::", type(temp1))
-    a = "{" +json.loads(temp1)+"}"
+    a = json.loads(temp1)
     print('\na ::', a)
     print('\ntype of a ::', type(a))
     
