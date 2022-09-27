@@ -1,10 +1,14 @@
 import argparse
 import tableauserverclient as TSC
+import json
 
 
 def main(args):
     print("\nproject_id ::", args.project_id)
     print("\ntype of project_id ::", type(args.project_id))
+    a = json.loads(args.project_id)
+    print('\na ::', a)
+    print('\ntype of a ::', type(a))
     
     # wb_list = []
     # for wb in args.workbook_files.split(","):
