@@ -2,7 +2,7 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "Sample.twbx",
+      "file_path": "Sample.twb",
       "project_path": "Default",
       "option": {
         "tags": ["sample", "temp"],
@@ -13,7 +13,7 @@
     },
     {
       "name": "Test",
-      "file_path": "Sample.twb",
+      "file_path": "Sample.twbx",
       "project_path": "Default",
       "option": {
         "tags": ["sample", "temp"],
