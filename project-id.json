@@ -2,8 +2,30 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "",
-      "project_path": "",
+      "file_path": "Sales-Dashboard.twbx",
+      "project_path": "Technology",
+      "option": {
+        "tags": ["sample", "temp"],
+        "hidden_views": ["Event by day"],
+        "show_tabs": true,
+        "description": "Sample description"
+      }
+    },
+    {
+      "name": "Test",
+      "file_path": "Sales Growth Dashboard.twbx",
+      "project_path": "Technology",
+      "option": {
+        "tags": ["sample", "temp"],
+        "hidden_views": ["Event by day"],
+        "show_tabs": true,
+        "description": "Sample description"
+      }
+    },
+    {
+      "name": "Test",
+      "file_path": "Sample.twb",
+      "project_path": "Technology",
       "option": {
         "tags": ["sample", "temp"],
         "hidden_views": ["Event by day"],
