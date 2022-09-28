@@ -7,13 +7,13 @@ def main(args):
     temp_var = json.loads(args.project_id)
 
     # Step 1: Sign in to server.
-    try:
-        tableau_auth = TSC.TableauAuth(args.username, args.password)
-        server = TSC.Server(args.server_url)
-        overwrite_true = TSC.Server.PublishMode.Overwrite
-
-        with server.auth.sign_in(tableau_auth):
-            for data in temp_var:
+    tableau_auth = TSC.TableauAuth(args.username, args.password)
+    server = TSC.Server(args.server_url)
+    overwrite_true = TSC.Server.PublishMode.Overwrite
+    
+    with server.auth.sign_in(tableau_auth):
+        for data in temp_var:
+            if data['project_path']:
                 # Step 2: Get all the projects on server, then look for the default one.
                 all_projects, pagination_item = server.projects.get()
                 project = next(
@@ -29,9 +29,8 @@ def main(args):
                 else:
                     error = "The project could not be found."
                     raise LookupError(error)
-    except:
-        print(error)
-
+            else:
+                print("Project Path is Empty.")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
