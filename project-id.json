@@ -3,7 +3,7 @@
     {
       "name": "Test",
       "file_path": "",
-      "project_path": "Technology",
+      "project_path": "",
       "option": {
         "tags": ["sample", "temp"],
         "hidden_views": ["Event by day"],
