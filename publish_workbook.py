@@ -2,35 +2,38 @@ import argparse
 import tableauserverclient as TSC
 import json
 
-
 def main(args):
     temp_var = json.loads(args.project_id)
 
-    # Step 1: Sign in to server.
-    tableau_auth = TSC.TableauAuth(args.username, args.password)
-    server = TSC.Server(args.server_url)
-    overwrite_true = TSC.Server.PublishMode.Overwrite
-    
-    with server.auth.sign_in(tableau_auth):
-        for data in temp_var:
-            if data['project_path']:
-                # Step 2: Get all the projects on server, then look for the default one.
-                all_projects, pagination_item = server.projects.get()
-                project = next(
-                    (project for project in all_projects if project.name == data['project_path']), None)
+    try:
+        # Step 1: Sign in to server.
+        tableau_auth = TSC.TableauAuth(args.username, args.password)
+        server = TSC.Server(args.server_url)
+        overwrite_true = TSC.Server.PublishMode.Overwrite
+        
+        with server.auth.sign_in(tableau_auth):
+            for data in temp_var:
+                if data['project_path']:
+                    # Step 2: Get all the projects on server, then look for the default one.
+                    all_projects, pagination_item = server.projects.get()
+                    project = next(
+                        (project for project in all_projects if project.name == data['project_path']), None)
 
-                # Step 3: If default project is found, form a new workbook item and publish.
-                if project is not None:
-                    new_workbook = TSC.WorkbookItem(project.id)
-                    new_workbook = server.workbooks.publish(
-                        new_workbook, data['file_path'], overwrite_true)
-                    print(
-                        f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+                    # Step 3: If default project is found, form a new workbook item and publish.
+                    if project is not None:
+                        new_workbook = TSC.WorkbookItem(project.id)
+                        new_workbook = server.workbooks.publish(
+                            new_workbook, data['file_path'], overwrite_true)
+                        print(
+                            f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+                    else:
+                        error = "The project could not be found."
+                        raise LookupError(error)
                 else:
-                    error = "The project could not be found."
-                    raise LookupError(error)
-            else:
-                print("Project Path is Empty.")
+                    print("Project Path is Empty.")
+                    
+    except:
+        print('A New Exception occurred.')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
