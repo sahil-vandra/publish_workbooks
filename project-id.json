@@ -2,17 +2,6 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "Sample.twb",
-      "project_path": "Default",
-      "option": {
-        "tags": ["sample", "temp"],
-        "hidden_views": ["Event by day"],
-        "show_tabs": true,
-        "description": "Sample description"
-      }
-    },
-    {
-      "name": "Test",
       "file_path": "Sample.twbx",
       "project_path": "Default",
       "option": {
