@@ -31,7 +31,7 @@ def main(args):
                         error = "The project could not be found."
                         raise LookupError(error)
                 else:
-                    print("Project Path is Empty.")
+                    print("File Path or Project Path is Empty.")
 
     except Exception as ex:
         print('There was some error occure.', ex)
