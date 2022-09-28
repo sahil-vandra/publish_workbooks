@@ -32,8 +32,6 @@ jobs:
       - name: Publish Workbook
         run: |
           ls
-          cd .git/lfs/objects
-          ls
           project_id=`jq '.workbooks' project-id.json`
           if [ "$project_id" != '' ];then
               python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id "${project_id}" --password ${{env.PASS}} --username ${{env.UNAME}}
