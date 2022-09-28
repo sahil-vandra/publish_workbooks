@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f1872427d3540610297d405be220f2b642f4e07f4030234d44d11c1cd6411882
-size 599
+{
+  "workbooks": [
+    {
+      "name": "Test",
+      "file_path": "Sales-Dashboard.twbx",
+      "project_path": "Technology",
+      "option": {
+        "tags": ["sample", "temp"],
+        "hidden_views": ["Event by day"],
+        "show_tabs": true,
+        "description": "Sample description"
+      }
+    }
+  ]
+}
