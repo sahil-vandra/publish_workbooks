@@ -2,8 +2,8 @@
   "workbooks": [
     {
       "name": "Sales Growth Dashboard",
-      "file_path": "",
-      "project_path": "",
+      "file_path": "Sales-Dashboard.twbx",
+      "project_path": "Technology",
       "option": {
         "tags": ["sample", "temp"],
         "hidden_views": ["Event by day"],
