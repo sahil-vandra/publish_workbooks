@@ -1,9 +1,9 @@
 {
   "workbooks": [
     {
-      "name": "Sales Growth Dashboard",
-      "file_path": "",
-      "project_path": "",
+      "name": "Test",
+      "file_path": "InsideAirbnb.twbx",
+      "project_path": "Technolog",
       "option": {
         "tags": ["sample", "temp"],
         "hidden_views": ["Event by day"],
