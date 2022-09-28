@@ -32,8 +32,8 @@ def main(args):
                 else:
                     print("Project Path is Empty.")
                     
-    except:
-        print('A New Exception occurred.')
+    except Exception as ex:
+        print('A New Exception occurred.',ex)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
