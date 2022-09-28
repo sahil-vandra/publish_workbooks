@@ -34,7 +34,7 @@ def main(args):
                     print("Project Path is Empty.")
 
     except Exception as ex:
-        print('A New Exception occurred.', ex)
+        print('There was some error occure.', ex)
         exit(1)
 
 
