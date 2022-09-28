@@ -2,7 +2,7 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "Sales-Dashboard.twbx",
+      "file_path": "",
       "project_path": "Technology",
       "option": {
         "tags": ["sample", "temp"],
