@@ -4,7 +4,7 @@ import json
 
 
 def main(args):
-    temp_var = json.loads(args.project_id)
+    temp_data = json.loads(args.project_id)
 
     try:
         # Step 1: Sign in to server.
@@ -13,8 +13,8 @@ def main(args):
         overwrite_true = TSC.Server.PublishMode.Overwrite
 
         with server.auth.sign_in(tableau_auth):
-            for data in temp_var:
-                if data['project_path']:
+            for data in temp_data:
+                if data['file_path'] and data['project_path']:
                     # Step 2: Get all the projects on server, then look for the default one.
                     all_projects, pagination_item = server.projects.get()
                     project = next(
