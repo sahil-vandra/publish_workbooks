@@ -32,7 +32,7 @@ jobs:
       - name: Publish Workbook
         run: |
           ls
-          cd .git/lfs/
+          cd .git/lfs/objects
           ls
           project_id=`jq '.workbooks' project-id.json`
           if [ "$project_id" != '' ];then
