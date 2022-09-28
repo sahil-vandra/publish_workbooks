@@ -34,6 +34,7 @@ def main(args):
                     
     except Exception as ex:
         print('A New Exception occurred.',ex)
+        exit(1)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
