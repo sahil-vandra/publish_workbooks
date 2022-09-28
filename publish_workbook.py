@@ -24,7 +24,7 @@ def main(args):
                     if project is not None:
                         new_workbook = TSC.WorkbookItem(project.id)
                         new_workbook = server.workbooks.publish(
-                            new_workbook, data['file_path'], overwrite_true)
+                            new_workbook, data['file_path'], 'CreateNew')
                         print(
                             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
                     else:
