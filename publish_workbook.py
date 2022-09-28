@@ -2,6 +2,7 @@ import argparse
 import tableauserverclient as TSC
 import json
 
+
 def main(args):
     temp_var = json.loads(args.project_id)
 
@@ -10,7 +11,7 @@ def main(args):
         tableau_auth = TSC.TableauAuth(args.username, args.password)
         server = TSC.Server(args.server_url)
         overwrite_true = TSC.Server.PublishMode.Overwrite
-        
+
         with server.auth.sign_in(tableau_auth):
             for data in temp_var:
                 if data['project_path']:
@@ -31,10 +32,11 @@ def main(args):
                         raise LookupError(error)
                 else:
                     print("Project Path is Empty.")
-                    
+
     except Exception as ex:
-        print('A New Exception occurred.',ex)
+        print('A New Exception occurred.', ex)
         exit(1)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
