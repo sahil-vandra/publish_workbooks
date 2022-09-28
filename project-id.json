@@ -2,29 +2,7 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "Sales-Dashboard.twbx",
-      "project_path": "Technology",
-      "option": {
-        "tags": ["sample", "temp"],
-        "hidden_views": ["Event by day"],
-        "show_tabs": true,
-        "description": "Sample description"
-      }
-    },
-    {
-      "name": "Test",
-      "file_path": "Sales Growth Dashboard.twbx",
-      "project_path": "Technology",
-      "option": {
-        "tags": ["sample", "temp"],
-        "hidden_views": ["Event by day"],
-        "show_tabs": true,
-        "description": "Sample description"
-      }
-    },
-    {
-      "name": "Test",
-      "file_path": "Sample.twb",
+      "file_path": "InsideAirbnb.twbx",
       "project_path": "Technology",
       "option": {
         "tags": ["sample", "temp"],
