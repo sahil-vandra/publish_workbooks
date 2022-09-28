@@ -2,8 +2,8 @@
   "workbooks": [
     {
       "name": "Test",
-      "file_path": "Sample.twbx",
-      "project_path": "Default",
+      "file_path": "",
+      "project_path": "",
       "option": {
         "tags": ["sample", "temp"],
         "hidden_views": ["Event by day"],
