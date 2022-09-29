@@ -37,7 +37,7 @@ jobs:
         run: |
           project_id=`jq '.workbooks' project-id.json`
           if [ "$project_id" != '' ];then
-              python3 publish_workbook.py --server_url "${{env.SERVURL}}" --project_id "${project_id}" --password ${{env.PASS}} --username ${{env.UNAME}}
+              python3 publish_workbook.py --username ${{env.UNAME}} --password ${{env.PASS}} --server_url "${{env.SERVURL}}" --project_id "${project_id}"
           else
               echo "project id is not accessable."
           fi
