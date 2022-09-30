@@ -10,6 +10,17 @@
         "show_tabs": true,
         "description": "Sample description"
       }
+    },
+    {
+      "name": "Test",
+      "file_path": "film_workbook.twb",
+      "project_path": "Technology",
+      "option": {
+        "tags": ["sample", "temp"],
+        "hidden_views": ["Event by day"],
+        "show_tabs": true,
+        "description": "Sample description"
+      }
     }
   ]
 }
