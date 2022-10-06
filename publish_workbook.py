@@ -24,7 +24,7 @@ def main(args):
                         new_workbook = TSC.WorkbookItem(
                             name=data['name'], project_id=project.id)
                         new_workbook = server.workbooks.publish(
-                            new_workbook, data['file_path'], publish_mode='Overwrite', hidden_views=data['hidden_views'])
+                            new_workbook, data['file_path'], mode='Overwrite', hidden_views=data['hidden_views'])
                         print(
                             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
                     else:
