@@ -1,23 +1,9 @@
 {
   "workbooks": [
     {
-      "name": "Sales Growth Dashboard",
-      "file_path": "Sales Growth Dashboard.twbx",
-      "project_path": "Default",
-      "tags": [
-        "sample",
-        "temp"
-      ],
-      "hidden_views": [
-        ""
-      ],
-      "show_tabs": true,
-      "description": "Sample description"
-    },
-    {
       "name": "Sample",
       "file_path": "Sample",
-      "project_path": "",
+      "project_path": "Sample.twb",
       "tags": [
         "sample",
         "temp"
