@@ -1,8 +1,22 @@
 {
   "workbooks": [
     {
-      "name": "Superstore_Sales_vs_Profit New",
-      "file_path": "Superstore_Sales_vs_Profit New.twb",
+      "name": "Sales Growth Dashboard",
+      "file_path": "Sales Growth Dashboard.twbx",
+      "project_path": "Technology",
+      "tags": [
+        "sample",
+        "temp"
+      ],
+      "hidden_views": [
+        "Event by day"
+      ],
+      "show_tabs": true,
+      "description": "Sample description"
+    },
+    {
+      "name": "Sample",
+      "file_path": "",
       "project_path": "Technology",
       "tags": [
         "sample",
