@@ -3,7 +3,7 @@
     {
       "name": "Sales Growth Dashboard",
       "file_path": "Sales Growth Dashboard.twbx",
-      "project_path": "Technology",
+      "project_path": "Default",
       "tags": [
         "sample",
         "temp"
@@ -16,8 +16,8 @@
     },
     {
       "name": "Sample",
-      "file_path": "",
-      "project_path": "Technology",
+      "file_path": "Sample",
+      "project_path": "",
       "tags": [
         "sample",
         "temp"
