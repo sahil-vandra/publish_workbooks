@@ -1,16 +1,11 @@
 {
   "workbooks": [
     {
-      "name": "",
-      "file_path": "",
-      "project_path": "",
-      "tags": [
-        "sample",
-        "temp"
-      ],
-      "hidden_views": [
-        ""
-      ],
+      "name": "Sample",
+      "file_path": "Samples.twbx",
+      "project_path": "Technology",
+      "tags": ["sample", "temp"],
+      "hidden_views": ["Sheet 1"],
       "show_tabs": true,
       "description": "Sample description"
     }
