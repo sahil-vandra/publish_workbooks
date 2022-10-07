@@ -23,17 +23,17 @@ def main(args):
                     # Step 3: If default project is found, form a new workbook item and publish.
                     if project is not None:
                         new_workbook = TSC.WorkbookItem(
-                            name=data['name'], project_id=project.id, show_tabs=data['show_tabs'], tags=data['tags'])
+                            name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
                         new_workbook = server.workbooks.publish(
                             workbook_item=new_workbook, file_path=data['file_path'], mode='Overwrite')
-                        
+
                         # tags=data['tags']
                         # show_tabs = data['show_tabs']
                         # if tags and show_tabs:
                         #  new_workbook.tags = set(tags)
                         #  new_workbook.show_tabs = show_tabs
                         #  new_workbook = server.workbooks.update(new_workbook)
-                         
+
                         print(
                             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
                     else:
@@ -42,11 +42,12 @@ def main(args):
                         exit(1)
 
                 else:
-                    if data['file_path'] and len(data['project_path']) < 1: 
+                    if data['file_path'] and len(data['project_path']) < 1:
                         print(f"{data['project_path']} not found")
                         print(f"{data['file_path']} not published")
-                    if len(data['project_path']) < 1 and len(data['file_path']) < 1: 
-                        print(f"{data['file_path']} and {data['project_path']} not found")
+                    if len(data['project_path']) < 1 and len(data['file_path']) < 1:
+                        print(
+                            f"{data['file_path']} and {data['project_path']} not found")
                     exit(1)
 
     except Exception as e:
