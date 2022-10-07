@@ -40,12 +40,12 @@ def main(args):
                         exit(1)
 
                 else:
-                    if data['file_path'] and len(data['project_path']) < 1:
-                        print(f"{data['project_path']} not found")
-                        print(f"{data['file_path']} not published")
+                    if len(data['file_path']) > 0 and len(data['project_path']) < 1:
+                        print(f"{data['project_path']} is empty.")
+                        print(f"{data['file_path']}  workbook is not published.")
                     if len(data['project_path']) < 1 and len(data['file_path']) < 1:
                         print(
-                            f"{data['file_path']} and {data['project_path']} not found")
+                            f"{data['file_path']} and {data['project_path']} both are empty.")
                     exit(1)
 
     except Exception as e:
