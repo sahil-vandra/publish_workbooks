@@ -26,7 +26,7 @@ def main(args):
                         name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
                     new_workbook = server.workbooks.publish(
                         new_workbook, data['file_path'], 'Overwrite', hidden_views=data['hidden_views'])
-                    if data['tags']:
+                    if data['tags'] is not None:
                         new_workbook.tags = set(data['tags'])
                         new_workbook = server.workbooks.update(
                             new_workbook)
