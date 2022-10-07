@@ -13,8 +13,8 @@ def main(args):
 
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
-                if data['file_path'] or data['project_path']:
-                    workbook_name = data['file_path']
+                workbook_name = data['file_path']
+                if data['file_path'] is not None:
                     # Step 2: Get all the projects on server, then look for the default one.
                     all_projects, pagination_item = server.projects.get()
                     project = next(
@@ -44,13 +44,12 @@ def main(args):
                         exit(1)
 
                 else:
-                    if data['file_path'] is None:
-                        print("file_path in json tamplate is empty.")
-                        print("Workbook is not published.")
+                    print("file_path in json tamplate is empty.")
+                    print("Workbook is not published.")
                     exit(1)
 
     except Exception as e:
-        print(f"{workbook_name} not published.\n", e)
+        print(f"{workbook_name} Workbook not published.\n", e)
         exit(1)
 
 
