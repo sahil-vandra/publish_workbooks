@@ -25,7 +25,7 @@ def main(args):
                         new_workbook = TSC.WorkbookItem(
                             name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
                         new_workbook = server.workbooks.publish(
-                            workbook_item=new_workbook, file_path=data['file_path'], mode='Overwrite')
+                            new_workbook, data['file_path'], 'Overwrite')
 
                         # tags=data['tags']
                         # show_tabs = data['show_tabs']
