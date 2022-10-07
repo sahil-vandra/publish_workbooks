@@ -29,9 +29,6 @@ def main(args):
 
                         if data['tags']:
                             new_workbook.tags = set(data['tags'])
-                        if data['description']:
-                            new_workbook.description = set(data['description'])
-                        if data['tags'] or data['description']:
                             new_workbook = server.workbooks.update(
                                 new_workbook)
 
