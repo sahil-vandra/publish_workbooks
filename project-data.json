@@ -2,7 +2,7 @@
   "workbooks": [
     {
       "name": "Sales Growth Dashboard",
-      "file_path": "Sales Growth Dashboard.twbx",
+      "file_path": "",
       "project_path": "Technology",
       "tags": ["sample", "temp"],
       "hidden_views": ["Growth Rates"],
