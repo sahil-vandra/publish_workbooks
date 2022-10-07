@@ -5,7 +5,7 @@ import json
 
 def main(args):
     project_data_json = json.loads(args.project_data)
-    workbook_name = None
+    workbook_file_path = None
     try:
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
@@ -13,7 +13,7 @@ def main(args):
 
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
-                workbook_name = data['file_path']
+                workbook_file_path = data['file_path']
                 
                 # Step 2: Get all the projects on server, then look for the default one.
                 all_projects, pagination_item = server.projects.get()
