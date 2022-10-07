@@ -35,17 +35,18 @@ def main(args):
                         print(
                             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
                     else:
-                        error = f"The project {data['file_path']} could not be found."
+                        if data['project_path'] is None:
+                            error = f"The project {data['project_path']} could not be found." 
+                        else: 
+                            error = f"The project for {data['file_path']} workbook could not be found."
                         raise LookupError(error)
+                        print(f"{data['file_path']} workbook is not published.")
                         exit(1)
 
                 else:
-                    if len(data['file_path']) > 0 and len(data['project_path']) < 1:
-                        print(f"{data['project_path']} is empty.")
-                        print(f"{data['file_path']}  workbook is not published.")
-                    if len(data['project_path']) < 1 and len(data['file_path']) < 1:
-                        print(
-                            f"{data['file_path']} and {data['project_path']} both are empty.")
+                    if data['file_path'] is None:
+                        print("file_path in json tamplate is empty.")
+                        print("Workbook is not published.")
                     exit(1)
 
     except Exception as e:
