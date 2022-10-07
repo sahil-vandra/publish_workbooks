@@ -2,7 +2,7 @@
   "workbooks": [
     {
       "name": "Sample",
-      "file_path": "Sample.twbx",
+      "file_path": "Sample.twb",
       "project_path": "Technology",
       "tags": ["sample", "temp"],
       "hidden_views": ["Sheet 1"],
