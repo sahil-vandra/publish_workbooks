@@ -3,7 +3,7 @@
     {
       "name": "Sample",
       "file_path": "Sample.twbx",
-      "project_path": "",
+      "project_path": "Technology",
       "tags": ["sample", "temp"],
       "hidden_views": ["Sheet 1"],
       "show_tabs": true,
