@@ -27,7 +27,7 @@ def main(args):
                         new_workbook = server.workbooks.publish(
                             new_workbook, data['file_path'], 'Overwrite', hidden_views=data['hidden_views'])
 
-                        if tags:
+                        if data['tags']:
                             new_workbook.tags = set(data['tags'])
                             new_workbook = server.workbooks.update(
                                 new_workbook)
