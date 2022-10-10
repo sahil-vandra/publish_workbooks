@@ -4,8 +4,8 @@ import json
 
 
 def main(args):
-    project_data_json = json.loads(args.project_data)
     workbook_file_path = ""
+    project_data_json = json.loads(args.project_data)
     try:
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
@@ -37,8 +37,8 @@ def main(args):
                         error = f"The project {data['project_path']} could not be found." 
                     else: 
                         error = f"The project for {data['file_path']} workbook could not be found."
-                    raise LookupError(error)
                     print(f"{data['file_path']} workbook is not published.")
+                    raise LookupError(error)
                     exit(1)
 
     except Exception as e:
