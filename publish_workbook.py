@@ -4,9 +4,9 @@ import json
 
 
 def main(args):
+    workbook_file_path = ""
     project_data_json = json.loads(args.project_data)
     try:
-        workbook_file_path = ""
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
         server = TSC.Server(args.server_url)
@@ -42,7 +42,7 @@ def main(args):
                     exit(1)
 
     except Exception as e:
-        print(f"{workbook_name} Workbook not published.\n", e)
+        print(f"{workbook_file_path} Workbook not published.\n", e)
         exit(1)
 
 
