@@ -4,9 +4,9 @@ import json
 
 
 def main(args):
-    workbook_file_path = ""
     project_data_json = json.loads(args.project_data)
     try:
+        workbook_file_path = ""
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
         server = TSC.Server(args.server_url)
