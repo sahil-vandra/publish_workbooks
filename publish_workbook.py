@@ -25,7 +25,7 @@ def main(args):
                     new_workbook = TSC.WorkbookItem(
                         name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
                     new_workbook = server.workbooks.publish(
-                        new_workbook, data['file_path'], 'Overwrite', hidden_views=data['hidden_views'])
+                        new_workbook, data['file_path'], 'Overwrite', as_job=True, hidden_views=data['hidden_views'])
                     if data['tags'] is not None:
                         new_workbook.tags = set(data['tags'])
                         new_workbook = server.workbooks.update(
