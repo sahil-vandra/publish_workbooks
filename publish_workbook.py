@@ -39,11 +39,11 @@ def main(args):
                         error = f"The project for {data['file_path']} workbook could not be found."
                     print(f"{data['file_path']} workbook is not published.")
                     raise LookupError(error)
-                    # exit(1)
+                    exit(1)
 
     except Exception as e:
         print(f"{workbook_file_path} Workbook not published.\n", e)
-        # exit(1)
+        exit(1)
 
 
 if __name__ == '__main__':
