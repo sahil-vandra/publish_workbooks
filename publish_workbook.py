@@ -6,8 +6,6 @@ import json
 def main(args):
     workbook_file_path = ""
     project_data_json = json.loads(args.project_data)
-    for data in project_data_json:
-        globals()[f"{data}"] = False
     try:
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
@@ -16,7 +14,7 @@ def main(args):
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
                 workbook_file_path = data['file_path']
-
+                
                 # Step 2: Get all the projects on server, then look for the default one.
                 all_projects, pagination_item = server.projects.get()
                 project = next(
@@ -34,11 +32,10 @@ def main(args):
                             new_workbook)
                     print(
                         f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
-                    globals()[f"{data['name']}"] = True
                 else:
                     if data['project_path'] is None:
-                        error = f"The project {data['project_path']} could not be found."
-                    else:
+                        error = f"The project {data['project_path']} could not be found." 
+                    else: 
                         error = f"The project for {data['file_path']} workbook could not be found."
                     print(f"{data['file_path']} workbook is not published.")
                     raise LookupError(error)
@@ -48,13 +45,6 @@ def main(args):
         print(f"{workbook_file_path} Workbook not published.\n", e)
         # exit(1)
 
-    finally:
-        for data in project_data_json:
-            print(f"{data['name']} is published: ",
-                  globals()[f"{data['name']}"])
-        for data in project_data_json:
-            if globals()[f"{data['name']}"] == False: exit(1)
-        
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
