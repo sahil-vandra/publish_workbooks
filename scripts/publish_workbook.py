@@ -15,7 +15,6 @@ def main(args):
             for data in project_data_json:
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                     '/', 1)[0] + "/workbooks/" + data['file_path']
-                print("wb_path:", wb_path)
 
                 if data['project_path'] is None:
                     error = f"The project project_path field is Null in JSON Template."
