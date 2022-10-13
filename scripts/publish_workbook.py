@@ -14,6 +14,8 @@ def main(args):
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
                 workbook_file_path = data['file_path']
+                wb_path = "./workbooks/" + data['file_path']
+                print("wb_path: ", wb_path)
                 
                 if data['project_path'] is None:
                     error = f"The project project_path field is Null in JSON Template." 
