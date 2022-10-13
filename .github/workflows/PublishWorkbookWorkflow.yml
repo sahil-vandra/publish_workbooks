@@ -3,7 +3,9 @@ on:
   pull_request:
     branches:
       - master
-    types: [closed]
+    types: [opened]
+  workflow_dispatch:
+  
 env:
   UNAME: ${{secrets.USERNAME}}
   PASS: ${{secrets.PASSWORD}}
