@@ -13,7 +13,7 @@ def main(args):
 
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
-                workbook_file_path = data['file_path']
+                # workbook_file_path = data['file_path']
                 wb_path = "/home/runner/work/publish_workbooks/publish_workbooks/workbooks/" + data['file_path']
                 print("wb_path: ", wb_path)
                 
