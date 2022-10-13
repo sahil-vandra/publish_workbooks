@@ -1,11 +1,15 @@
 import argparse
 import tableauserverclient as TSC
 import json
+import os 
 
 
 def main(args):
     project_data_json = json.loads(args.project_data)
     try:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        print("dir_path: ", dir_path.rsplit('/', 1)[0])
+        
         # Step 1: Sign in to server.
         tableau_auth = TSC.TableauAuth(args.username, args.password)
         server = TSC.Server(args.server_url)
