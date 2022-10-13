@@ -12,14 +12,15 @@ def main(args):
 
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
-                wb_path = "/home/runner/work/publish_workbooks/publish_workbooks/workbooks/" + data['file_path']
-                
+                wb_path = "/home/runner/work/publish_workbooks/publish_workbooks/workbooks/" + \
+                    data['file_path']
+
                 if data['project_path'] is None:
-                    error = f"The project project_path field is Null in JSON Template." 
+                    error = f"The project project_path field is Null in JSON Template."
                     print(f"{data['file_path']} workbook is not published.")
                     raise LookupError(error)
                     exit(1)
-                else: 
+                else:
                     # Step 2: Get all the projects on server, then look for the default one.
                     all_projects, pagination_item = server.projects.get()
                     project = next(
@@ -39,7 +40,8 @@ def main(args):
                             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
                     else:
                         error = f"The project for {data['file_path']} workbook could not be found."
-                        print(f"{data['file_path']} workbook is not published.")
+                        print(
+                            f"{data['file_path']} workbook is not published.")
                         raise LookupError(error)
                         exit(1)
 
