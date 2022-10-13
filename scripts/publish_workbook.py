@@ -14,7 +14,7 @@ def main(args):
         with server.auth.sign_in(tableau_auth):
             for data in project_data_json:
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
-                    '/', 1)[0] + data['file_path']
+                    '/', 1)[0] + "/" +data['file_path']
                 print("dsd::", wb_path)
 
                 if data['project_path'] is None:
