@@ -15,31 +15,34 @@ def main(args):
             for data in project_data_json:
                 workbook_file_path = data['file_path']
                 
-                # Step 2: Get all the projects on server, then look for the default one.
-                all_projects, pagination_item = server.projects.get()
-                project = next(
-                    (project for project in all_projects if project.name == data['project_path']), None)
-
-                # Step 3: If default project is found, form a new workbook item and publish.
-                if project is not None:
-                    new_workbook = TSC.WorkbookItem(
-                        name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
-                    new_workbook = server.workbooks.publish(
-                        new_workbook, data['file_path'], 'Overwrite', hidden_views=data['hidden_views'])
-                    if data['tags'] is not None:
-                        new_workbook.tags = set(data['tags'])
-                        new_workbook = server.workbooks.update(
-                            new_workbook)
-                    print(
-                        f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
-                else:
-                    if data['project_path'] is None:
-                        error = f"The project {data['project_path']} could not be found." 
-                    else: 
-                        error = f"The project for {data['file_path']} workbook could not be found."
+                if data['project_path'] is None:
+                    error = f"The project project_path field is Null in JSON Template." 
                     print(f"{data['file_path']} workbook is not published.")
                     raise LookupError(error)
                     exit(1)
+                else: 
+                    # Step 2: Get all the projects on server, then look for the default one.
+                    all_projects, pagination_item = server.projects.get()
+                    project = next(
+                        (project for project in all_projects if project.name == data['project_path']), None)
+
+                    # Step 3: If default project is found, form a new workbook item and publish.
+                    if project is not None:
+                        new_workbook = TSC.WorkbookItem(
+                            name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
+                        new_workbook = server.workbooks.publish(
+                            new_workbook, data['file_path'], 'Overwrite', hidden_views=data['hidden_views'])
+                        if data['tags'] is not None:
+                            new_workbook.tags = set(data['tags'])
+                            new_workbook = server.workbooks.update(
+                                new_workbook)
+                        print(
+                            f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+                    else:
+                        error = f"The project for {data['file_path']} workbook could not be found."
+                        print(f"{data['file_path']} workbook is not published.")
+                        raise LookupError(error)
+                        exit(1)
 
     except Exception as e:
         print(f"{workbook_file_path} Workbook not published.\n", e)
