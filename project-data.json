@@ -5,7 +5,7 @@
       "file_path": "Sales Growth Dashboard.twbx",
       "project_path": "Technology",
       "tags": [],
-      "hidden_views": ["Growth Rates"],
+      "hidden_views": [],
       "show_tabs": true,
       "description": "Sample description"
     },
@@ -14,7 +14,7 @@
       "file_path": "Sample.twb",
       "project_path": "Technology",
       "tags": [],
-      "hidden_views": ["Growth Rates"],
+      "hidden_views": [],
       "show_tabs": true,
       "description": "Sample description"
     }
