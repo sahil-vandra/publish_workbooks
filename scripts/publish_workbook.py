@@ -32,11 +32,11 @@ def main(args):
                     project2 = next(
                         (project for project in all_projects if project.name == data['sub_folder_path']), None)
 
-                    if project1.id == project2.id:
+                    if project1 is not None and project2 is not None:
                         # Step 3: If required project is found, form a new workbook item and publish.
-                        if project1 is not None and project2 is not None:
+                        if project1.id == project2.id:
                             new_workbook = TSC.WorkbookItem(
-                                name=data['name'], project_id=project1.id, show_tabs=data['show_tabs'])
+                                name=data['name'], project_id=project2.id, show_tabs=data['show_tabs'])
                             new_workbook = server.workbooks.publish(
                                 new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
 
@@ -47,12 +47,18 @@ def main(args):
 
                             print(
                                 f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
-                            
+
                             server.auth.sign_out()
                         else:
                             error = f"The project for {data['file_path']} workbook could not be found."
                             print(
                                 f"{data['file_path']} workbook is not published.")
+                            raise LookupError(error)
+                            exit(1)
+
+                    else:
+                            error = f"{data['file_path']} workbook is not published."
+                            print(error)
                             raise LookupError(error)
                             exit(1)
 
