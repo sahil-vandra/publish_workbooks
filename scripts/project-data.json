@@ -10,16 +10,6 @@
       "hidden_views": ["Growth Rates"],
       "show_tabs": true,
       "description": "Sample description"
-    },
-    {
-      "name": "Sample",
-      "site_name": "Enterprise",
-      "file_path": "Sample.twb",
-      "project_path": "Technology",
-      "tags": ["sample", "temp"],
-      "hidden_views": ["Growth Rates"],
-      "show_tabs": true,
-      "description": "Sample description"
     }
   ]
 }
