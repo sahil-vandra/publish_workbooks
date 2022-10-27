@@ -26,33 +26,38 @@ def main(args):
                 else:
                     # Step 2: Get all the projects on server, then look for the required one.
                     all_projects, pagination_item = server.projects.get()
-                    project = next(
-                        (project for project in all_projects if project.name == data['project_path']), None)
-                    print("project.parent_id:: ", project.parent_id)
-                    print("project-id:::", project.id)
+                    project1 = next(
+                        (project for project in all_projects if project.name == data['project_path1']), None)
+                    print("project.parent_id:: ", project1.parent_id)
+                    print("project-id:::", project1.id)
+                    
+                    project2 = next(
+                        (project for project in all_projects if project.name == data['project_path2']), None)
+                    print("project.parent_id:: ", project2.parent_id)
+                    print("project-id:::", project2.id)
                     
                     # Step 3: If required project is found, form a new workbook item and publish.
-                    if project is not None:
-                        new_workbook = TSC.WorkbookItem(
-                            name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
-                        new_workbook = server.workbooks.publish(
-                            new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
+                    # if project is not None:
+                    #     new_workbook = TSC.WorkbookItem(
+                    #         name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
+                    #     new_workbook = server.workbooks.publish(
+                    #         new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
 
-                        if data['tags'] is not None:
-                            new_workbook.tags = set(data['tags'])
-                            new_workbook = server.workbooks.update(
-                                new_workbook)
+                    #     if data['tags'] is not None:
+                    #         new_workbook.tags = set(data['tags'])
+                    #         new_workbook = server.workbooks.update(
+                    #             new_workbook)
 
-                        print(
-                            f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+                    #     print(
+                    #         f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
 
-                        server.auth.sign_out()
-                    else:
-                        error = f"The project for {data['file_path']} workbook could not be found."
-                        print(
-                            f"{data['file_path']} workbook is not published.")
-                        raise LookupError(error)
-                        exit(1)
+                    #     server.auth.sign_out()
+                    # else:
+                    #     error = f"The project for {data['file_path']} workbook could not be found."
+                    #     print(
+                    #         f"{data['file_path']} workbook is not published.")
+                    #     raise LookupError(error)
+                    #     exit(1)
 
     except Exception as e:
         print("Workbook not published.\n", e)
