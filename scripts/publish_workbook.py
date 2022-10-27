@@ -27,8 +27,9 @@ def main(args):
                     # Step 2: Get all the projects on server, then look for the required one.
                     all_projects, pagination_item = server.projects.get()
                     project = next(
-                        (project for project in all_projects if project.name == data['sub_folder_path']), None)
+                        (project for project in all_projects if project.name == data['project_path']), None)
                     print("project.parent_id:: ", project.parent_id)
+                    print("project-id:::", project.id)
                     
                     # Step 3: If required project is found, form a new workbook item and publish.
                     if project is not None:
