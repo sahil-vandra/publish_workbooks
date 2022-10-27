@@ -2,10 +2,10 @@
   "workbooks": [
     {
       "name": "Sales Growth Dashboard",
-      "site_name": "Enterprise",
+      "site_id": "834abe2d-18ac-46d3-9346-a2f3079941d2",
+      "site_name": "https://tableau.devinvh.com/#/site/Enterprise/projects",
       "file_path": "Sales Growth Dashboard.twbx",
-      "project_path1": "Working",
-      "project_path2": "Technology",
+      "project_path": "Technology",
       "tags": ["sample", "temp"],
       "hidden_views": ["Growth Rates"],
       "show_tabs": true,
