@@ -17,7 +17,7 @@ def main(args):
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                     '/', 1)[0] + "/workbooks/" + data['file_path']
 
-                if data['project_path'] is None:
+                if data['project_path1'] is None:
                     error = f"The project project_path field is Null in JSON Template."
                     print(
                         f"{data['file_path']} workbook is not published.")
