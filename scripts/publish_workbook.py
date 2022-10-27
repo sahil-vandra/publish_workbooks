@@ -7,7 +7,7 @@ import tableauserverclient as TSC
 def main(args):
     project_data_json = json.loads(args.project_data)
     try:
-        for data in project_data_json:
+        # for data in project_data_json:
             # Step 1: Sign in to server.
             tableau_auth = TSC.TableauAuth(
                 args.username, args.password)
@@ -16,8 +16,7 @@ def main(args):
             with server.auth.sign_in(tableau_auth):
                 all_project_items, pagination_item = server.projects.get()
                 print("type of all_project_items::: ", type(all_project_items))
-                print("all_project_items::: ", all_project_items)
-                print([proj for proj in all_project_items])
+                print([type(proj) for proj in all_project_items])
                 print("--------------------------------------------------")
                 print([proj.name for proj in all_project_items])
                 
