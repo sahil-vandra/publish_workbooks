@@ -8,7 +8,7 @@ def main(args):
     project_data_json = json.loads(args.project_data)
     try:
         for data in project_data_json:
-            a=args.server_url + "#/site/" + data['site_name'] + "/projects"
+            a=args.server_url + "/#/site/" + data['site_name'] + "/projects"
             print(a)
             # Step 1: Sign in to server.
             tableau_auth = TSC.TableauAuth(
