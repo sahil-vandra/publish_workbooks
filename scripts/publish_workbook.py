@@ -28,13 +28,21 @@ def main(args):
                     all_projects, pagination_item = server.projects.get()
                     project1 = next(
                         (project for project in all_projects if project.name == data['project_path1']), None)
+                    print("----Working----")
                     print("project.parent_id:: ", project1.parent_id)
                     print("project-id:::", project1.id)
                     
                     project2 = next(
                         (project for project in all_projects if project.name == data['project_path2']), None)
+                    print("----Technology----")
                     print("project.parent_id:: ", project2.parent_id)
                     print("project-id:::", project2.id)
+                    
+                    project3 = next(
+                        (project for project in all_projects if project.name == data['project_path3']), None)
+                    print("----Default----")
+                    print("project.parent_id:: ", project3.parent_id)
+                    print("project-id:::", project3.id)
                     
                     # Step 3: If required project is found, form a new workbook item and publish.
                     # if project is not None:
