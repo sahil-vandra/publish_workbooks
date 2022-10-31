@@ -17,16 +17,15 @@ def main(args):
                 # server.auth.switch_site(site)
 
                 all_projects, pagination_item = server.projects.get()
-                project = next(
+                project_item = next(
                     (project for project in all_projects if project.name == data['project_path']), None)
-                
 
                 capabilities = {
                     TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
                 }
 
                 rules = TSC.PermissionsRule(
-                    grantee=project,
+                    grantee=project_item,
                     capabilities=capabilities
                 )
 
