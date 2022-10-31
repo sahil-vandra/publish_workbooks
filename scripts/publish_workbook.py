@@ -17,12 +17,9 @@ def main(args):
                 # server.auth.switch_site(site)
 
                 all_project_items, pagination_item = server.projects.get()
-                # project_item = all_project_items[0]
-                for i in all_project_items:
-                    pprint(vars(i))
+                project_item = all_project_items[0]
                 
-                # print("project_item ::", type(all_project_items))
-                # server.projects.populate_workbook_default_permissions(project_item)
+                server.projects.populate_workbook_default_permissions(project_item)
                 
                 # ----------------------------
 
