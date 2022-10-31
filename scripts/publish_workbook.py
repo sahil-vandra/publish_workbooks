@@ -16,21 +16,20 @@ def main(args):
                 # site = server.sites.get_by_id(data['site_id'])
                 # server.auth.switch_site(site)
 
-                all_projects, pagination_item = server.projects.get()
-                project_item = next(
-                    (project for project in all_projects if project.name == data['project_path']), None)
+                wb = next((w for w in TSC.Pager(server.workbooks)
+                          if w.name == data['project_path']), None)
+                all_users = next((g for g in TSC.Pager(
+                    server.groups) if g.name == 'All Users'), None)
 
-                capabilities = {
-                    TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
+                secret_rule = TSC.PermissionsItem()
+                secret_rule.group_id = all_users.id
+                
+                secret_rule.capabilities = {
+                    TSC.Capabilities.Read: 'Allow',
+                    TSC.Capabilities.Download: 'Deny'
                 }
 
-                rules = TSC.PermissionsRule(
-                    grantee=project_item,
-                    capabilities=capabilities
-                )
-
-                server.projects.update_workbook_default_permissions(
-                    project_item, [rules])
+                wb.add_permissions_rule(secret_rule)
                 # ----------------------------
 
                 # wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
