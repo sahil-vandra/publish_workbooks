@@ -18,7 +18,7 @@ def main(args):
 
                 all_project_items, pagination_item = server.projects.get()
                 project_item = all_project_items[0]
-                print("project_item", project_item)
+                print("project_item", type(project_item))
                 server.projects.populate_workbook_default_permissions(project_item)
                 
                 # ----------------------------
