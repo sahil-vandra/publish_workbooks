@@ -9,12 +9,12 @@ def main(args):
     try:
         for data in project_data_json:
             # Step 1: Sign in to server.
-            tableau_auth = TSC.TableauAuth('Nirav Padia', 'Password1')
-            server = TSC.Server('https://tableau.devinvh.com/')
+            tableau_auth = TSC.TableauAuth(args.username, args.password)
+            server = TSC.Server(args.server_url, use_server_version=True)
 
             with server.auth.sign_in(tableau_auth):
-                # site = server.sites.get_by_id(data['site_id'])
-                # server.auth.switch_site(site)
+                site = server.sites.get_by_id(data['site_id'])
+                server.auth.switch_site(site)
 
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                     '/', 1)[0] + "/workbooks/" + data['file_path']
