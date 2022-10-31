@@ -9,7 +9,7 @@ def main(args):
     try:
         for data in project_data_json:
             # Step 1: Sign in to server.
-            tableau_auth = TSC.TableauAuth("Nirav Padia", args.password)
+            tableau_auth = TSC.TableauAuth('Nirav Padia', 'Password1')
             server = TSC.Server(args.server_url)
 
             with server.auth.sign_in(tableau_auth):
