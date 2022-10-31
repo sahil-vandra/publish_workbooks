@@ -20,6 +20,7 @@ def main(args):
                 project_item = all_project_items[0]
                 print("project_item", project_item)
                 server.projects.populate_workbook_default_permissions(project_item)
+                
                 # ----------------------------
 
                 # wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
