@@ -16,43 +16,60 @@ def main(args):
                 site = server.sites.get_by_id(data['site_id'])
                 server.auth.switch_site(site)
 
-                wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
-                    '/', 1)[0] + "/workbooks/" + data['file_path']
+                all_project_items, pagination_item = server.projects.get()
+                project_item = all_project_items[0]
+                print("project_item", project_item)
 
-                if data['project_path'] is None:
-                    error = f"The project project_path field is Null in JSON Template."
-                    print(
-                        f"{data['file_path']} workbook is not published.")
-                    raise LookupError(error)
-                    exit(1)
-                else:
-                    # Step 2: Get all the projects on server, then look for the required one.
-                    all_projects, pagination_item = server.projects.get()
-                    project = next(
-                        (project for project in all_projects if project.name == data['project_path']), None)
+                capabilities = {
+                    TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
+                }
 
-                    # Step 3: If required project is found, form a new workbook item and publish.
-                    if project is not None:
-                        new_workbook = TSC.WorkbookItem(
-                            name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
-                        new_workbook = server.workbooks.publish(
-                            new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
+                rules = TSC.PermissionsRule(
+                    grantee=project_item,
+                    capabilities=capabilities
+                )
 
-                        if data['tags'] is not None:
-                            new_workbook.tags = set(data['tags'])
-                            new_workbook = server.workbooks.update(
-                                new_workbook)
+                server.projects.update_workbook_default_permissions(
+                    project_item, [rules])
+                # ----------------------------
 
-                        print(
-                            f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+                # wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
+                #     '/', 1)[0] + "/workbooks/" + data['file_path']
 
-                        server.auth.sign_out()
-                    else:
-                        error = f"The project for {data['file_path']} workbook could not be found."
-                        print(
-                            f"{data['file_path']} workbook is not published.")
-                        raise LookupError(error)
-                        exit(1)
+                # if data['project_path'] is None:
+                #     error = f"The project project_path field is Null in JSON Template."
+                #     print(
+                #         f"{data['file_path']} workbook is not published.")
+                #     raise LookupError(error)
+                #     exit(1)
+                # else:
+                #     # Step 2: Get all the projects on server, then look for the required one.
+                #     all_projects, pagination_item = server.projects.get()
+                #     project = next(
+                #         (project for project in all_projects if project.name == data['project_path']), None)
+
+                #     # Step 3: If required project is found, form a new workbook item and publish.
+                #     if project is not None:
+                #         new_workbook = TSC.WorkbookItem(
+                #             name=data['name'], project_id=project.id, show_tabs=data['show_tabs'])
+                #         new_workbook = server.workbooks.publish(
+                #             new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
+
+                #         if data['tags'] is not None:
+                #             new_workbook.tags = set(data['tags'])
+                #             new_workbook = server.workbooks.update(
+                #                 new_workbook)
+
+                #         print(
+                #             f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
+
+                #         server.auth.sign_out()
+                #     else:
+                #         error = f"The project for {data['file_path']} workbook could not be found."
+                #         print(
+                #             f"{data['file_path']} workbook is not published.")
+                #         raise LookupError(error)
+                #         exit(1)
 
     except Exception as e:
         print("Workbook not published.\n", e)
