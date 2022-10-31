@@ -20,6 +20,8 @@ def main(args):
                 project_item = next(
                     (project for project in all_projects if project.name == data['project_path']), None)
 
+                project_item['tag_name'] = ""
+                
                 capabilities = {
                     TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
                 }
