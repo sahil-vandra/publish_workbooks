@@ -13,23 +13,12 @@ def main(args):
             server = TSC.Server(args.server_url, use_server_version=True)
 
             with server.auth.sign_in(tableau_auth):
-                site = server.sites.get_by_id(data['site_id'])
-                server.auth.switch_site(site)
+                # site = server.sites.get_by_id(data['site_id'])
+                # server.auth.switch_site(site)
 
                 all_project_items, pagination_item = server.projects.get()
                 project_item = all_project_items[0]
-
-                capabilities = {
-                    TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
-                }
-
-                rules = TSC.PermissionsRule(
-                    grantee=project_item,
-                    capabilities=capabilities
-                )
-
-                server.projects.update_workbook_default_permissions(
-                    project_item, [rules])
+                server.projects.populate_workbook_default_permissions(project_item)
                 # ----------------------------
 
                 # wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
