@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip 
-          pip install git+https://github.com/tableau/server-client-python.git@development
+          pip install tableauserverclient==0.22
 
       - name: Publish Workbook
         run: |
