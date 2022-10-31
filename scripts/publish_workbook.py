@@ -2,7 +2,7 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
-from pprint import pprint
+
 
 def main(args):
     project_data_json = json.loads(args.project_data)
@@ -18,9 +18,18 @@ def main(args):
 
                 all_project_items, pagination_item = server.projects.get()
                 project_item = all_project_items[0]
-                
-                server.projects.populate_workbook_default_permissions(project_item)
-                
+
+                capabilities = {
+                    TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
+                }
+
+                rules = TSC.PermissionsRule(
+                    grantee=project_item,
+                    capabilities=capabilities
+                )
+
+                server.projects.update_workbook_default_permissions(
+                    project_item, [rules])
                 # ----------------------------
 
                 # wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
