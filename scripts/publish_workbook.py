@@ -2,7 +2,7 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
-
+from pprint import pprint
 
 def main(args):
     project_data_json = json.loads(args.project_data)
@@ -19,7 +19,8 @@ def main(args):
                 all_project_items, pagination_item = server.projects.get()
                 # project_item = all_project_items[0]
                 for i in all_project_items:
-                    print(i)
+                    pprint(vars(i))
+                
                 # print("project_item ::", type(all_project_items))
                 # server.projects.populate_workbook_default_permissions(project_item)
                 
