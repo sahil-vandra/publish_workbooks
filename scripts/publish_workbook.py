@@ -18,7 +18,7 @@ def main(args):
 
                 all_project_items, pagination_item = server.projects.get()
                 project_item = all_project_items[0]
-                print("project_item", project_item)
+                print("project_item", all_project_items[0])
 
                 capabilities = {
                     TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
