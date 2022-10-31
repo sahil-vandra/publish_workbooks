@@ -9,11 +9,13 @@ def main(args):
     try:
         for data in project_data_json:
             # Step 1: Sign in to server.
-            tableau_auth = TSC.TableauAuth(
-                args.username, args.password, 'https://tableau.devinvh.com/#/site/Enterprise/projects/')
+            tableau_auth = TSC.TableauAuth(args.username, args.password, site_id='https://tableau.devinvh.com/#/site/DataLab/projects/')
             server = TSC.Server(args.server_url)
 
             with server.auth.sign_in(tableau_auth):
+                # site = server.sites.get_by_id(data['site_id'])
+                # server.auth.switch_site(site)
+
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                     '/', 1)[0] + "/workbooks/" + data['file_path']
 
@@ -28,7 +30,7 @@ def main(args):
                     all_projects, pagination_item = server.projects.get()
                     project = next(
                         (project for project in all_projects if project.name == data['project_path']), None)
-                    
+
                     # Step 3: If required project is found, form a new workbook item and publish.
                     if project is not None:
                         new_workbook = TSC.WorkbookItem(
