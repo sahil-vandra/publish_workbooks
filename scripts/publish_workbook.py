@@ -13,8 +13,8 @@ def main(args):
             server = TSC.Server(args.server_url)
 
             with server.auth.sign_in(tableau_auth):
-                # site = server.sites.get_by_id(data['site_id'])
-                # server.auth.switch_site(site)
+                site = server.sites.get_by_id(data['site_id'])
+                server.auth.switch_site(site)
 
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                     '/', 1)[0] + "/workbooks/" + data['file_path']
