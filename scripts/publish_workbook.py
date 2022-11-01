@@ -72,10 +72,10 @@ def main(args):
                 # new_workbook = server.workbooks.publish(
                 #     new_workbook, wb_path, 'Overwrite', hidden_views=data['hidden_views'])
 
-                if data['tags'] is not None:
-                    new_workbook.tags = set(data['tags'])
-                    new_workbook = server.workbooks.update(
-                        new_workbook)
+                # if data['tags'] is not None:
+                #     new_workbook.tags = set(data['tags'])
+                #     new_workbook = server.workbooks.update(
+                #         new_workbook)
 
                 print(
                     f"\nWorkbook :: {data['file_path']} :: published in {data['project_path']} project")
