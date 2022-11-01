@@ -9,7 +9,8 @@
       "tags": ["sample", "temp"],
       "hidden_views": ["Growth Rates"],
       "show_tabs": true,
-      "description": "Sample description"
+      "description": "Sample description",
+      "is_site_default": true
     },
     {
       "name": "Sales Growth Dashboard",
@@ -20,7 +21,8 @@
       "tags": [],
       "hidden_views": [],
       "show_tabs": true,
-      "description": ""
+      "description": "",
+      "is_site_default": false
     }
   ]
 }
