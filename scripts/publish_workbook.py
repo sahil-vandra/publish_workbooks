@@ -6,7 +6,7 @@ import tableauserverclient as TSC
 
 def signin(site_name):
     tableau_auth = TSC.TableauAuth(
-        args.username, args.password, 'DataLab')
+        args.username, args.password, site_name)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
@@ -17,6 +17,7 @@ def getProject(server, project_path, file_path):
     project = next(
         (project for project in all_projects if project.name == project_path), None)
     if project.id is not None:
+        print("project.id ::", project.id)
         return project.id
     else:
         raiseError(
