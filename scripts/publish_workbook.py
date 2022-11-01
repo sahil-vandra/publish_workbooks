@@ -59,7 +59,6 @@ def main(args):
         print("Workbook not published.\n", e)
         exit(1)
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
 
