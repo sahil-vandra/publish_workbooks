@@ -10,8 +10,9 @@ def raiseError(e, file_path):
     exit(1)
 
 
-def signin():
-    tableau_auth = TSC.TableauAuth(args.username, args.password)
+def signin(site_name):
+    comtentURL = f'https://tableau.devinvh.com/api/#/site/{site_name}/workbooks'
+    tableau_auth = TSC.TableauAuth(args.username, args.password, comtentURL)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
@@ -58,10 +59,10 @@ def main(args):
     project_data_json = json.loads(args.project_data)
     try:
         # Step 1: Sign in to Tableau server.
-        server = signin()
 
         for data in project_data_json:
-            switchSite(server, data['site_id'])
+            server = signin(data['site_name'])
+            # switchSite(server, data['site_id'])
 
             if data['project_path'] is None:
                 raiseError(
