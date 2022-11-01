@@ -5,8 +5,6 @@ import tableauserverclient as TSC
 
 
 def signin():
-    # comtentURL = f'https://tableau.devinvh.com/api/#/site/{site_name}/'
-    # https://tableau.devinvh.com
     tableau_auth = TSC.TableauAuth(
         args.username, args.password)
     server = TSC.Server(args.server_url, use_server_version=True)
@@ -16,6 +14,7 @@ def signin():
 
 def switchSite(server, site_id):
     site = server.sites.get_by_id(site_id)
+    print("site ::", site)
     server.auth.switch_site(site)
 
 
