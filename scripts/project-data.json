@@ -10,17 +10,6 @@
       "hidden_views": ["Growth Rates"],
       "show_tabs": true,
       "description": "Sample description"
-    },
-    {
-      "name": "Sales Growth Dashboard",
-      "site_id": "e4fc3628-68b4-4a72-a956-9fc3c02192f4",
-      "site_name": "DataLab",
-      "file_path": "Sales Growth Dashboard.twbx",
-      "project_path": "Default",
-      "tags": [],
-      "hidden_views": [],
-      "show_tabs": true,
-      "description": ""
     }
   ]
 }
