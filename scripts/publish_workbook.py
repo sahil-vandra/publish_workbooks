@@ -2,7 +2,7 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
-from pprint import pprint
+
 
 def signin():
     tableau_auth = TSC.TableauAuth(
@@ -12,11 +12,10 @@ def signin():
     return server
 
 
-def switchSite(server, site_id):
+def switchSite(server, site_id, file_path):
     site = server.sites.get_by_id(site_id)
-    print("site id :", site_id)
-    pprint("site ::", vars(site))
     server.auth.switch_site(site)
+    print(f"site id : {site_id}, site name: {file_path}")
 
 
 def getProject(server, project_path, file_path):
@@ -64,7 +63,7 @@ def main(args):
 
         for data in project_data_json:
             server = signin()
-            switchSite(server, data['site_id'])
+            switchSite(server, data['site_id'], data['file_path'])
 
             if data['project_path'] is None:
                 raiseError(
