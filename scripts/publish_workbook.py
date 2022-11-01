@@ -58,7 +58,7 @@ def main(args):
 
         for data in project_data_json:
             # Step 1: Sign in to Tableau server.
-            server = signin(data['site_name'], data['is_site_default'], server_url)
+            server = signin(data['site_name'], data['is_site_default'], data['server_url'])
 
             if data['project_path'] is None:
                 raiseError(
