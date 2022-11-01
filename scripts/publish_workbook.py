@@ -7,7 +7,7 @@ def signin():
     # Step 1: Sign in to server.
     tableau_auth = TSC.TableauAuth(args.username, args.password)
     server = TSC.Server(args.server_url, use_server_version=True)
-    return server
+    return server, tableau_auth
     
 def main(args):
     project_data_json = json.loads(args.project_data)
@@ -16,7 +16,7 @@ def main(args):
         # tableau_auth = TSC.TableauAuth(args.username, args.password)
         # server = TSC.Server(args.server_url, use_server_version=True)
         
-        server = signin()
+        server, tableau_auth = signin()
         
         for data in project_data_json:
             with server.auth.sign_in(tableau_auth):
