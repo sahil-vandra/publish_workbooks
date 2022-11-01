@@ -12,8 +12,9 @@ def signin():
     return server
 
 
-def switchSite(server, site_id, file_path):
-    site = server.sites.get_by_id(site_id)
+def switchSite(server, site_id, file_path, site_name):
+    # site = server.sites.get_by_id(site_id)
+    site = server.sites.get_by_name(site_name)
     server.auth.switch_site(site)
     print(f"site id : {site_id}, site name: {file_path}")
 
@@ -63,7 +64,7 @@ def main(args):
 
         for data in project_data_json:
             server = signin()
-            switchSite(server, data['site_id'], data['file_path'])
+            switchSite(server, data['site_id'], data['file_path'], data['site_name'])
 
             if data['project_path'] is None:
                 raiseError(
