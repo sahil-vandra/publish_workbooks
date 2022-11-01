@@ -33,7 +33,7 @@ def getProject(server, project_path, file_path):
             f"The project for {file_path} workbook could not be found.", file_path)
 
 
-def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags):
+def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags, project_path):
     wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
         '/', 1)[0] + "/workbooks/" + file_path
 
@@ -73,7 +73,7 @@ def main(args):
 
                 # Step 3: Form a new workbook item and publish.
                 publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'])
+                          data['show_tabs'], data['hidden_views'], data['tags'], data['file_path'])
 
                 # Step 4: Sign Out to the Tableau Server
                 server.auth.sign_out()
