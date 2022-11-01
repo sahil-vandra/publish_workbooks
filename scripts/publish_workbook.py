@@ -4,10 +4,10 @@ import argparse
 import tableauserverclient as TSC
 
 
-def signin(site_name, is_site_default):
+def signin(site_name, is_site_default, server_url):
     tableau_auth = TSC.TableauAuth(
             args.username, args.password, None if is_site_default else site_name)
-    server = TSC.Server(args.server_url, use_server_version=True)
+    server = TSC.Server(server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
 
@@ -58,7 +58,7 @@ def main(args):
 
         for data in project_data_json:
             # Step 1: Sign in to Tableau server.
-            server = signin(data['site_name'], data['is_site_default'])
+            server = signin(data['site_name'], data['is_site_default'], server_url)
 
             if data['project_path'] is None:
                 raiseError(
