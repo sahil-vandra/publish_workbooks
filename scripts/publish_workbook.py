@@ -87,8 +87,6 @@ if __name__ == '__main__':
                         type=str, required=True)
     parser.add_argument('--password', action='store',
                         type=str, required=True)
-    parser.add_argument('--server_url', action='store',
-                        type=str, required=True)
     parser.add_argument('--project_data', action='store',
                         type=str, required=True)
 
