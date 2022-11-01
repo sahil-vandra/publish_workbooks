@@ -4,15 +4,11 @@ import argparse
 import tableauserverclient as TSC
 
 
-def raiseError(e, file_path):
-    print(f"{file_path} workbook is not published.")
-    raise LookupError(e)
-    exit(1)
-
-
-def signin(site_name):
+def signin():
     # comtentURL = f'https://tableau.devinvh.com/api/#/site/{site_name}/'
-    tableau_auth = TSC.TableauAuth(args.username, args.password, 'https://tableau.devinvh.com/#/site/DataLab/workbooks')
+    # https://tableau.devinvh.com
+    tableau_auth = TSC.TableauAuth(
+        args.username, args.password)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
@@ -55,14 +51,20 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
             f"\nUpdate Workbook Successfully and set Tags.")
 
 
+def raiseError(e, file_path):
+    print(f"{file_path} workbook is not published.")
+    raise LookupError(e)
+    exit(1)
+
+
 def main(args):
     project_data_json = json.loads(args.project_data)
     try:
         # Step 1: Sign in to Tableau server.
 
         for data in project_data_json:
-            server = signin(data['site_name'])
-            # switchSite(server, data['site_id'])
+            server = signin()
+            switchSite(server, data['site_id'])
 
             if data['project_path'] is None:
                 raiseError(
