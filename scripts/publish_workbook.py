@@ -12,7 +12,8 @@ def signin():
     
 def switchSite(server,site_id):
     site = server.sites.get_by_id(site_id)
-    server.auth.switch_site(site)
+    res = server.auth.switch_site(site)
+    print("res :::", res)
     
 def main(args):
     project_data_json = json.loads(args.project_data)
