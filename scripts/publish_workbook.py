@@ -2,7 +2,7 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
-
+from pprint import pprint
 
 def signin():
     tableau_auth = TSC.TableauAuth(
@@ -14,7 +14,8 @@ def signin():
 
 def switchSite(server, site_id):
     site = server.sites.get_by_id(site_id)
-    print("site ::", site)
+    print("site id :", site_id)
+    pprint("site ::", vars(site))
     server.auth.switch_site(site)
 
 
