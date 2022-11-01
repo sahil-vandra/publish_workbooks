@@ -5,8 +5,12 @@ import tableauserverclient as TSC
 
 
 def signin(site_name):
+    if site_name == "Enterprise":
+        site_name = ""
+    else: None
+    
     tableau_auth = TSC.TableauAuth(
-        args.username, args.password, 'Enterprise')
+        args.username, args.password, site_name)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
