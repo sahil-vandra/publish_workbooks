@@ -3,18 +3,24 @@ import json
 import argparse
 import tableauserverclient as TSC
 
-
+def signin():
+    # Step 1: Sign in to server.
+    tableau_auth = TSC.TableauAuth(args.username, args.password)
+    server = TSC.Server(args.server_url, use_server_version=True)
+    return server
+    
 def main(args):
     project_data_json = json.loads(args.project_data)
     try:
-        # Step 1: Sign in to server.
-        tableau_auth = TSC.TableauAuth(args.username, args.password)
-        server = TSC.Server(args.server_url, use_server_version=True)
+        # # Step 1: Sign in to server.
+        # tableau_auth = TSC.TableauAuth(args.username, args.password)
+        # server = TSC.Server(args.server_url, use_server_version=True)
+        
+        server = signin()
         
         for data in project_data_json:
             with server.auth.sign_in(tableau_auth):
                 site = server.sites.get_by_id(data['site_id'])
-                print("site ::", site)
                 server.auth.switch_site(site)
 
                 wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
@@ -58,6 +64,7 @@ def main(args):
     except Exception as e:
         print("Workbook not published.\n", e)
         exit(1)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(allow_abbrev=False)
