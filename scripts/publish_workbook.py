@@ -4,22 +4,16 @@ import argparse
 import tableauserverclient as TSC
 
 
-def raiseError(e, file_path):
-    print(f"{file_path} workbook is not published.")
-    raise LookupError(e)
-    exit(1)
-
-
-def signin():
-    tableau_auth = TSC.TableauAuth(args.username, args.password)
+def signin(site_name):
+    if site_name == "Enterprise":
+        site_name = ""
+    else: None
+    
+    tableau_auth = TSC.TableauAuth(
+        args.username, args.password, site_name)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
-
-
-def switchSite(server, site_id):
-    site = server.sites.get_by_id(site_id)
-    server.auth.switch_site(site)
 
 
 def getProject(server, project_path, file_path):
@@ -27,6 +21,7 @@ def getProject(server, project_path, file_path):
     project = next(
         (project for project in all_projects if project.name == project_path), None)
     if project.id is not None:
+        print("project.id ::", project.id)
         return project.id
     else:
         raiseError(
@@ -54,14 +49,19 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
             f"\nUpdate Workbook Successfully and set Tags.")
 
 
+def raiseError(e, file_path):
+    print(f"{file_path} workbook is not published.")
+    raise LookupError(e)
+    exit(1)
+
+
 def main(args):
     project_data_json = json.loads(args.project_data)
     try:
         # Step 1: Sign in to Tableau server.
-        server = signin()
 
         for data in project_data_json:
-            switchSite(server, data['site_id'])
+            server = signin(data['site_name'])
 
             if data['project_path'] is None:
                 raiseError(
@@ -73,7 +73,7 @@ def main(args):
 
                 # Step 3: Form a new workbook item and publish.
                 publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['file_path'])
+                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'])
 
                 # Step 4: Sign Out to the Tableau Server
                 server.auth.sign_out()
