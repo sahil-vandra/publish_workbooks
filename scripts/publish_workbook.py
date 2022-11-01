@@ -4,25 +4,12 @@ import argparse
 import tableauserverclient as TSC
 
 
-def signin():
+def signin(site_name):
     tableau_auth = TSC.TableauAuth(
         args.username, args.password, 'DataLab')
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
-
-
-def switchSite(server, site_id, file_path, site_name):
-    all_sites, pagination_item = server.sites.get()
-
-    # print all the site names and ids
-    for site in all_sites:
-        print(site.content_url)
-        
-    # site = server.sites.get_by_id(site_id)
-    # site = server.sites.get_by_name(site_name)
-    # server.auth.switch_site(site)
-    # print(f"site id : {site_id}, site name: {file_path}")
 
 
 def getProject(server, project_path, file_path):
@@ -69,8 +56,7 @@ def main(args):
         # Step 1: Sign in to Tableau server.
 
         for data in project_data_json:
-            server = signin()
-            # switchSite(server, data['site_id'], data['file_path'], data['site_name'])
+            server = signin(data['site_name'])
 
             if data['project_path'] is None:
                 raiseError(
@@ -82,7 +68,7 @@ def main(args):
 
                 # Step 3: Form a new workbook item and publish.
                 publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['file_path'])
+                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'])
 
                 # Step 4: Sign Out to the Tableau Server
                 server.auth.sign_out()
