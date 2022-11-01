@@ -13,10 +13,16 @@ def signin():
 
 
 def switchSite(server, site_id, file_path, site_name):
+    all_sites, pagination_item = server.sites.get()
+
+    # print all the site names and ids
+    for site in all_sites:
+        print(site.id, site.name, site.content_url, site.state)
+        
     # site = server.sites.get_by_id(site_id)
-    site = server.sites.get_by_name(site_name)
-    server.auth.switch_site(site)
-    print(f"site id : {site_id}, site name: {file_path}")
+    # site = server.sites.get_by_name(site_name)
+    # server.auth.switch_site(site)
+    # print(f"site id : {site_id}, site name: {file_path}")
 
 
 def getProject(server, project_path, file_path):
@@ -66,20 +72,20 @@ def main(args):
             server = signin()
             switchSite(server, data['site_id'], data['file_path'], data['site_name'])
 
-            if data['project_path'] is None:
-                raiseError(
-                    f"The project project_path field is Null in JSON Template.", file_path)
-            else:
-                # Step 2: Get all the projects on server, then look for the required one.
-                project_id = getProject(
-                    server, data['project_path'], data['file_path'])
+            # if data['project_path'] is None:
+            #     raiseError(
+            #         f"The project project_path field is Null in JSON Template.", file_path)
+            # else:
+            #     # Step 2: Get all the projects on server, then look for the required one.
+            #     project_id = getProject(
+            #         server, data['project_path'], data['file_path'])
 
-                # Step 3: Form a new workbook item and publish.
-                publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['file_path'])
+            #     # Step 3: Form a new workbook item and publish.
+            #     publishWB(server, data['file_path'], data['name'], project_id,
+            #               data['show_tabs'], data['hidden_views'], data['tags'], data['file_path'])
 
-                # Step 4: Sign Out to the Tableau Server
-                server.auth.sign_out()
+            #     # Step 4: Sign Out to the Tableau Server
+            #     server.auth.sign_out()
 
     except Exception as e:
         print("Workbook not published.\n", e)
