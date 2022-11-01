@@ -4,14 +4,10 @@ import argparse
 import tableauserverclient as TSC
 
 
-def signin(site_name):
-    if site_name == "Enterprise":
-        site_name = ""
-    else: None
-    
+def signin(site_name, is_site_default, server_url):
     tableau_auth = TSC.TableauAuth(
-        args.username, args.password, site_name)
-    server = TSC.Server(args.server_url, use_server_version=True)
+            args.username, args.password, None if is_site_default else site_name)
+    server = TSC.Server(server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
     return server
 
@@ -20,15 +16,15 @@ def getProject(server, project_path, file_path):
     all_projects, pagination_item = server.projects.get()
     project = next(
         (project for project in all_projects if project.name == project_path), None)
+    
     if project.id is not None:
-        print("project.id ::", project.id)
         return project.id
     else:
         raiseError(
             f"The project for {file_path} workbook could not be found.", file_path)
 
 
-def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags, project_path):
+def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags, project_path, site_name):
     wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
         '/', 1)[0] + "/workbooks/" + file_path
 
@@ -38,10 +34,10 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
         new_workbook, wb_path, 'Overwrite', hidden_views=hidden_views)
 
     print(
-        f"\nSuccessfully published {file_path} Workbook in {project_path} project.")
+        f"\nSuccessfully published {file_path} Workbook in {project_path} project in {site_name} site.")
 
     # Update Workbook and set tags
-    if tags is not None:
+    if len(tags) > 0:
         new_workbook.tags = set(tags)
         new_workbook = server.workbooks.update(
             new_workbook)
@@ -57,11 +53,12 @@ def raiseError(e, file_path):
 
 def main(args):
     project_data_json = json.loads(args.project_data)
+    
     try:
-        # Step 1: Sign in to Tableau server.
 
         for data in project_data_json:
-            server = signin(data['site_name'])
+            # Step 1: Sign in to Tableau server.
+            server = signin(data['site_name'], data['is_site_default'], data['server_url'])
 
             if data['project_path'] is None:
                 raiseError(
@@ -73,7 +70,7 @@ def main(args):
 
                 # Step 3: Form a new workbook item and publish.
                 publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'])
+                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
 
                 # Step 4: Sign Out to the Tableau Server
                 server.auth.sign_out()
@@ -89,8 +86,6 @@ if __name__ == '__main__':
     parser.add_argument('--username', action='store',
                         type=str, required=True)
     parser.add_argument('--password', action='store',
-                        type=str, required=True)
-    parser.add_argument('--server_url', action='store',
                         type=str, required=True)
     parser.add_argument('--project_data', action='store',
                         type=str, required=True)
