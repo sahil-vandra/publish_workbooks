@@ -24,7 +24,7 @@ def getProject(server, project_path, file_path):
             f"The project for {file_path} workbook could not be found.", file_path)
 
 
-def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags, project_path):
+def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags, project_path, site_name):
     wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
         '/', 1)[0] + "/workbooks/" + file_path
 
@@ -34,7 +34,7 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
         new_workbook, wb_path, 'Overwrite', hidden_views=hidden_views)
 
     print(
-        f"\nSuccessfully published {file_path} Workbook in {project_path} project.")
+        f"\nSuccessfully published {file_path} Workbook in {project_path} project in {site_name}.")
 
     # Update Workbook and set tags
     if len(tags) > 0:
@@ -70,7 +70,7 @@ def main(args):
 
                 # Step 3: Form a new workbook item and publish.
                 publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'])
+                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
 
                 # Step 4: Sign Out to the Tableau Server
                 server.auth.sign_out()
