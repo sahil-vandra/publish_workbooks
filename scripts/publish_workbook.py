@@ -3,22 +3,27 @@ import json
 import argparse
 import tableauserverclient as TSC
 
-# Sign in to server.
+
 def signin():
     tableau_auth = TSC.TableauAuth(args.username, args.password)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
-    return server, tableau_auth
+    return server
+    
+def switchSite(server,site_id):
+    site = server.sites.get_by_id(site_id)
+    server.auth.switch_site(site)
     
 def main(args):
     project_data_json = json.loads(args.project_data)
-    try:        
-        server, tableau_auth = signin()
+    try:
+        # Sign in to server.
+        server = signin()
         
         for data in project_data_json:
-            # with server.auth.sign_in(tableau_auth):
-            site = server.sites.get_by_id(data['site_id'])
-            server.auth.switch_site(site)
+            switchSite(server, data['site_id'])
+            # site = server.sites.get_by_id(data['site_id'])
+            # server.auth.switch_site(site)
 
             wb_path = os.path.dirname(os.path.realpath(__file__)).rsplit(
                 '/', 1)[0] + "/workbooks/" + data['file_path']
