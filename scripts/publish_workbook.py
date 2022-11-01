@@ -11,7 +11,7 @@ def raiseError(e, file_path):
 
 
 def signin(site_name):
-    comtentURL = f'https://tableau.devinvh.com/api/#/site/{site_name}/workbooks'
+    comtentURL = f'https://tableau.devinvh.com/api/#/site/{site_name}/'
     tableau_auth = TSC.TableauAuth(args.username, args.password, comtentURL)
     server = TSC.Server(args.server_url, use_server_version=True)
     server.auth.sign_in(tableau_auth)
