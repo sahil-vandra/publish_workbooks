@@ -17,7 +17,7 @@ def switchSite(server, site_id, file_path, site_name):
 
     # print all the site names and ids
     for site in all_sites:
-        print(site.id, site.name, site.content_url, site.state)
+        print(site.content_url)
         
     # site = server.sites.get_by_id(site_id)
     # site = server.sites.get_by_name(site_name)
