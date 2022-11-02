@@ -85,7 +85,7 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Deny,
+        TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
     }
 
     # Each PermissionRule in the list contains a grantee and a dict of capabilities
