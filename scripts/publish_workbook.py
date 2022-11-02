@@ -57,21 +57,31 @@ def updateProjectPermissions(server, project_path):
     all_projects, pagination_item = server.projects.get()
     project = next(
         (project for project in all_projects if project.name == project_path), None)
+    print(f"project name:{project.name} and id: {project.id}")
 
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
 
     for default_permissions in project.default_workbook_permissions:
-        # Add workbook capability to "All Users" default group if it does not already exist
         new_capabilities = {
-            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
         }
-        # Each PermissionRule in the list contains a grantee and a dict of capabilities
+
         new_rules = [TSC.PermissionsRule(
             grantee=default_permissions.grantee, capabilities=new_capabilities)]
 
         new_default_permissions = server.projects.update_workbook_default_permissions(
             project, new_rules)
+
+        # Print result from adding a new default permission
+        for permission in new_default_permissions:
+            grantee = permission.grantee
+            capabilities = permission.capabilities
+            print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+
+            for capability in capabilities:
+                print(f"\t{capability} - {capabilities[capability]}")
+
 
 # def updateProjectPermissions(server, project_path):
 #     all_projects, pagination_item = server.projects.get()
