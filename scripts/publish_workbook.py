@@ -73,14 +73,14 @@ def updateProjectPermissions(server, project_path):
         new_default_permissions = server.projects.update_workbook_default_permissions(
             project, new_rules)
 
-        # Print result from adding a new default permission
-        for permission in new_default_permissions:
-            grantee = permission.grantee
-            capabilities = permission.capabilities
-            print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+    # Print result from adding a new default permission
+    for permission in new_default_permissions:
+        grantee = permission.grantee
+        capabilities = permission.capabilities
+        print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
 
-            for capability in capabilities:
-                print(f"\t{capability} - {capabilities[capability]}")
+        for capability in capabilities:
+            print(f"\t{capability} - {capabilities[capability]}")
 
 
 # def updateProjectPermissions(server, project_path):
