@@ -2,7 +2,7 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
-
+from pprint import pprint
 
 def raiseError(e, file_path):
     print(f"{file_path} workbook is not published.")
@@ -64,7 +64,7 @@ def updateProjectPermissions(server, project_path):
     
     # new projects have 1 grantee group
     for i in project.default_workbook_permissions:
-        print("default_permissions grantee ::", i.grantee.name)
+        print("default_permissions grantee ::", pprint(vars(i.grantee)))
 
     # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
     new_capabilities = {
