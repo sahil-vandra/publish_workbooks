@@ -66,7 +66,6 @@ def updateProjectPermissions(server, project_path):
         new_capabilities = {
             TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
         }
-
         # Each PermissionRule in the list contains a grantee and a dict of capabilities
         new_rules = [TSC.PermissionsRule(
             grantee=default_permissions.grantee, capabilities=new_capabilities)]
