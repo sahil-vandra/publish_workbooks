@@ -61,6 +61,7 @@ def updateProjectPermissions(server, project_path):
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
     default_permissions = project.default_workbook_permissions[1] 
+    print("default_permissions grantee id ::", default_permissions.grantee.id)
     
     # new projects have 1 grantee group
     # for i in project.default_workbook_permissions:
@@ -80,7 +81,6 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.ShareView: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ViewUnderlyingData: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Deny,
