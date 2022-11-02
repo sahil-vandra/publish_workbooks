@@ -51,7 +51,7 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
             f"\nUpdate Workbook Successfully and set Tags.")
 
 
-def updateProjectPermissions(project_path):
+def updateProjectPermissions(server, project_path):
     all_projects, pagination_item = server.projects.get()
     project_item = next(
         (project for project in all_projects if project.name == project_path), None)
@@ -78,7 +78,7 @@ def main(args):
             server = signin(data['site_name'],
                             data['is_site_default'], data['server_url'])
 
-            updateProjectPermissions(data['project_path'])
+            updateProjectPermissions(server, data['project_path'])
             
             # if data['project_path'] is None:
             #     raiseError(
