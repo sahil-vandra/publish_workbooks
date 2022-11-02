@@ -4,6 +4,7 @@ import argparse
 import tableauserverclient as TSC
 from pprint import pprint
 
+
 def raiseError(e, file_path):
     print(f"{file_path} workbook is not published.")
     raise LookupError(e)
@@ -52,59 +53,85 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
 
 
 def updateProjectPermissions(server, project_path):
+
     all_projects, pagination_item = server.projects.get()
     project = next(
         (project for project in all_projects if project.name == project_path), None)
 
-    print(f"project name:{project.name} and id: {project.id}")
-    
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
-    print("len of project.default_workbook_permissions",len(project.default_workbook_permissions))
-    
-    default_permissions = project.default_workbook_permissions[0] 
-    print("default_permissions grantee id ::", default_permissions.grantee.id)
-    
-    # new projects have 1 grantee group
-    # for i in project.default_workbook_permissions:
-    #     default_permissions = i
-    #     print("default_permissions grantee ::", pprint(vars(i.grantee)))
 
-    # Add workbook capability to "All Users" default group if it does not already exist
-    new_capabilities = {
-        TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
-        # TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ChangeHierarchy: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ExportData: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ExportImage: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.Filter: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ShareView: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.ViewUnderlyingData: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
-        # TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
-    }
+    for default_permissions in project.default_workbook_permissions:
+        # Add workbook capability to "All Users" default group if it does not already exist
+        new_capabilities = {
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
+        }
 
-    # Each PermissionRule in the list contains a grantee and a dict of capabilities
-    new_rules = [TSC.PermissionsRule(
-        grantee=default_permissions.grantee, capabilities=new_capabilities)]
+        new_capabilities = {
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny
+        }
 
-    new_default_permissions = server.projects.update_workbook_default_permissions(
-        project, new_rules)
+        # Each PermissionRule in the list contains a grantee and a dict of capabilities
+        new_rules = [TSC.PermissionsRule(
+            grantee=default_permissions.grantee, capabilities=new_capabilities)]
 
-    # Print result from adding a new default permission
-    for permission in new_default_permissions:
-        grantee = permission.grantee
-        capabilities = permission.capabilities
-        print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+        new_default_permissions = server.projects.update_workbook_default_permissions(
+            project, new_rules)
 
-        for capability in capabilities:
-            print(f"\t{capability} - {capabilities[capability]}")
+# def updateProjectPermissions(server, project_path):
+#     all_projects, pagination_item = server.projects.get()
+#     project = next(
+#         (project for project in all_projects if project.name == project_path), None)
+
+#     print(f"project name:{project.name} and id: {project.id}")
+
+#     # Query for existing workbook default-permissions
+#     server.projects.populate_workbook_default_permissions(project)
+#     # print("len of project.default_workbook_permissions",len(project.default_workbook_permissions))
+
+#     default_permissions = project.default_workbook_permissions[0]
+#     print("default_permissions grantee id ::", default_permissions.grantee.id)
+
+#     # new projects have 1 grantee group
+#     # for i in project.default_workbook_permissions:
+#     #     default_permissions = i
+#     #     print("default_permissions grantee ::", pprint(vars(i.grantee)))
+
+#     # Add workbook capability to "All Users" default group if it does not already exist
+#     new_capabilities = {
+#         TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
+#         # TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ChangeHierarchy: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportImage: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Filter: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ShareView: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ViewUnderlyingData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
+#     }
+
+#     # Each PermissionRule in the list contains a grantee and a dict of capabilities
+#     new_rules = [TSC.PermissionsRule(
+#         grantee=default_permissions.grantee, capabilities=new_capabilities)]
+
+#     new_default_permissions = server.projects.update_workbook_default_permissions(
+#         project, new_rules)
+
+#     # Print result from adding a new default permission
+#     # for permission in new_default_permissions:
+#     #     grantee = permission.grantee
+#     #     capabilities = permission.capabilities
+#     #     print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+
+#     #     for capability in capabilities:
+#     #         print(f"\t{capability} - {capabilities[capability]}")
 
 
 def main(args):
