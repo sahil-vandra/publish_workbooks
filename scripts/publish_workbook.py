@@ -2,6 +2,13 @@ import os
 import json
 import argparse
 import tableauserverclient as TSC
+from pprint import pprint
+
+
+def raiseError(e, file_path):
+    print(f"{file_path} workbook is not published.")
+    raise LookupError(e)
+    exit(1)
 
 
 def signin(site_name, is_site_default, server_url):
@@ -45,10 +52,81 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
             f"\nUpdate Workbook Successfully and set Tags.")
 
 
-def raiseError(e, file_path):
-    print(f"{file_path} workbook is not published.")
-    raise LookupError(e)
-    exit(1)
+def updateProjectPermissions(server, project_path):
+
+    all_projects, pagination_item = server.projects.get()
+    project = next(
+        (project for project in all_projects if project.name == project_path), None)
+
+    # Query for existing workbook default-permissions
+    server.projects.populate_workbook_default_permissions(project)
+
+    for default_permissions in project.default_workbook_permissions:
+        # Add workbook capability to "All Users" default group if it does not already exist
+        new_capabilities = {
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
+        }
+        # Each PermissionRule in the list contains a grantee and a dict of capabilities
+        new_rules = [TSC.PermissionsRule(
+            grantee=default_permissions.grantee, capabilities=new_capabilities)]
+
+        new_default_permissions = server.projects.update_workbook_default_permissions(
+            project, new_rules)
+
+# def updateProjectPermissions(server, project_path):
+#     all_projects, pagination_item = server.projects.get()
+#     project = next(
+#         (project for project in all_projects if project.name == project_path), None)
+
+#     print(f"project name:{project.name} and id: {project.id}")
+
+#     # Query for existing workbook default-permissions
+#     server.projects.populate_workbook_default_permissions(project)
+#     # print("len of project.default_workbook_permissions",len(project.default_workbook_permissions))
+
+#     default_permissions = project.default_workbook_permissions[0]
+#     print("default_permissions grantee id ::", default_permissions.grantee.id)
+
+#     # new projects have 1 grantee group
+#     # for i in project.default_workbook_permissions:
+#     #     default_permissions = i
+#     #     print("default_permissions grantee ::", pprint(vars(i.grantee)))
+
+#     # Add workbook capability to "All Users" default group if it does not already exist
+#     new_capabilities = {
+#         TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
+#         # TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ChangeHierarchy: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportImage: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Filter: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ShareView: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.ViewUnderlyingData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
+#         # TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
+#     }
+
+#     # Each PermissionRule in the list contains a grantee and a dict of capabilities
+#     new_rules = [TSC.PermissionsRule(
+#         grantee=default_permissions.grantee, capabilities=new_capabilities)]
+
+#     new_default_permissions = server.projects.update_workbook_default_permissions(
+#         project, new_rules)
+
+#     # Print result from adding a new default permission
+#     # for permission in new_default_permissions:
+#     #     grantee = permission.grantee
+#     #     capabilities = permission.capabilities
+#     #     print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+
+#     #     for capability in capabilities:
+#     #         print(f"\t{capability} - {capabilities[capability]}")
 
 
 def main(args):
@@ -61,20 +139,22 @@ def main(args):
             server = signin(data['site_name'],
                             data['is_site_default'], data['server_url'])
 
-            if data['project_path'] is None:
-                raiseError(
-                    f"The project project_path field is Null in JSON Template.", file_path)
-            else:
-                # Step 2: Get all the projects on server, then look for the required one.
-                project_id = getProject(
-                    server, data['project_path'], data['file_path'])
+            updateProjectPermissions(server, data['project_path'])
 
-                # Step 3: Form a new workbook item and publish.
-                publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
+            # if data['project_path'] is None:
+            #     raiseError(
+            #         f"The project project_path field is Null in JSON Template.", file_path)
+            # else:
+            #     # Step 2: Get all the projects on server, then look for the required one.
+            #     project_id = getProject(
+            #         server, data['project_path'], data['file_path'])
 
-                # Step 4: Sign Out to the Tableau Server
-                server.auth.sign_out()
+            #     # Step 3: Form a new workbook item and publish.
+            #     publishWB(server, data['file_path'], data['name'], project_id,
+            #               data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
+
+            #     # Step 4: Sign Out to the Tableau Server
+            server.auth.sign_out()
 
     except Exception as e:
         print("Workbook not published.\n", e)
