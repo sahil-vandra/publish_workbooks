@@ -60,8 +60,9 @@ def updateProjectPermissions(server, project_path):
     
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
+    print("len of project.default_workbook_permissions",len(project.default_workbook_permissions))
     default_permissions = project.default_workbook_permissions[0] 
-    # print("default_permissions grantee id ::", default_permissions.grantee.id)
+    print("default_permissions grantee id ::", default_permissions.grantee.id)
     
     # new projects have 1 grantee group
     # for i in project.default_workbook_permissions:
