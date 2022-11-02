@@ -78,7 +78,7 @@ def updateProjectPermissions(server, project_path):
     for permission in new_default_permissions:
         grantee = permission.grantee
         capabilities = permission.capabilities
-        print(f"\nCapabilities for {grantee.tag_name}: {grantee.id} and grantee name: {grantee.name}:")
+        print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
 
         for capability in capabilities:
             print(f"\t{capability} - {capabilities[capability]}")
