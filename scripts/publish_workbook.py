@@ -62,38 +62,26 @@ def updateProjectPermissions(server, project_path):
     default_permissions = project.default_workbook_permissions[0]
 
     # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
-    if TSC.Permission.Capability.ExportXml not in default_permissions.capabilities:
-        new_capabilities = {
-            TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
-            TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
-        }
+    # if TSC.Permission.Capability.ExportXml not in default_permissions.capabilities:
+    new_capabilities = {
+        TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Denie
+    }
 
-        # Each PermissionRule in the list contains a grantee and a dict of capabilities
-        new_rules = [TSC.PermissionsRule(
-            grantee=default_permissions.grantee, capabilities=new_capabilities)]
+    # Each PermissionRule in the list contains a grantee and a dict of capabilities
+    new_rules = [TSC.PermissionsRule(
+        grantee=default_permissions.grantee, capabilities=new_capabilities)]
 
-        new_default_permissions = server.projects.update_workbook_default_permissions(
-            project, new_rules)
+    new_default_permissions = server.projects.update_workbook_default_permissions(
+        project, new_rules)
 
-        # Print result from adding a new default permission
-        for permission in new_default_permissions:
-            grantee = permission.grantee
-            capabilities = permission.capabilities
-            print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+    # Print result from adding a new default permission
+    for permission in new_default_permissions:
+        grantee = permission.grantee
+        capabilities = permission.capabilities
+        print(f"\nCapabilities for {grantee.tag_name}: {grantee.id} and grantee name: {grantee.name}:")
 
-            for capability in capabilities:
-                print(f"\t{capability} - {capabilities[capability]}")
-
-    # capabilities = {
-    #     TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
-    # }
-
-    # rules = TSC.PermissionsRule(
-    #     grantee=project_item,
-    #     capabilities=capabilities
-    # )
-
-    # server.projects.update_workbook_default_permissions(project_item, [rules])
+        for capability in capabilities:
+            print(f"\t{capability} - {capabilities[capability]}")
 
 
 def main(args):
