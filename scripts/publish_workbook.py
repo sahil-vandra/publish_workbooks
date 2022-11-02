@@ -71,7 +71,6 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ChangeHierarchy: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.Connect: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ExportData: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ExportImage: TSC.Permission.Mode.Allow,
