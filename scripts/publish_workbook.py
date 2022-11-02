@@ -56,16 +56,16 @@ def updateProjectPermissions(server, project_path):
     project_item = next(
         (project for project in all_projects if project.name == project_path), None)
 
-    project_capabilities = {
-        TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow
+    capabilities = {
+        TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
     }
 
-    project_rules = TSC.PermissionsRule(
+    rules = TSC.PermissionsRule(
         grantee=project_item,
-        capabilities=project_capabilities
+        capabilities=capabilities
     )
 
-    server.projects.update_permission(project_item, [project_rules])
+    server.projects.update_workbook_default_permissions(project_item, [rules])
 
 
 def main(args):
@@ -79,7 +79,7 @@ def main(args):
                             data['is_site_default'], data['server_url'])
 
             updateProjectPermissions(server, data['project_path'])
-            
+
             # if data['project_path'] is None:
             #     raiseError(
             #         f"The project project_path field is Null in JSON Template.", file_path)
