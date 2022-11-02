@@ -60,7 +60,7 @@ def updateProjectPermissions(server, project_path):
     server.projects.populate_workbook_default_permissions(project)
     
     # new projects have 1 grantee group
-    for i in len(project.default_workbook_permissions):
+    for i in project.default_workbook_permissions:
         default_permissions = i
         print("default_permissions grantee ::", default_permissions.grantee.id)
 
