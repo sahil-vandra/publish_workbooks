@@ -58,8 +58,10 @@ def updateProjectPermissions(server, project_path):
 
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
+    
     # new projects have 1 grantee group
     default_permissions = project.default_workbook_permissions[0]
+    print("default_permissions grantee ::", default_permissions.grantee)
 
     # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
     new_capabilities = {
