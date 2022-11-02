@@ -4,6 +4,12 @@ import argparse
 import tableauserverclient as TSC
 
 
+def raiseError(e, file_path):
+    print(f"{file_path} workbook is not published.")
+    raise LookupError(e)
+    exit(1)
+
+
 def signin(site_name, is_site_default, server_url):
     tableau_auth = TSC.TableauAuth(
         args.username, args.password, None if is_site_default else site_name)
@@ -45,10 +51,21 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
             f"\nUpdate Workbook Successfully and set Tags.")
 
 
-def raiseError(e, file_path):
-    print(f"{file_path} workbook is not published.")
-    raise LookupError(e)
-    exit(1)
+def updateProjectPermissions(project_path):
+    all_projects, pagination_item = server.projects.get()
+    project_item = next(
+        (project for project in all_projects if project.name == project_path), None)
+
+    project_capabilities = {
+        TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow
+    }
+
+    project_rules = TSC.PermissionsRule(
+        grantee=project_item,
+        capabilities=project_capabilities
+    )
+
+    server.projects.update_permission(project_item, [project_rules])
 
 
 def main(args):
@@ -61,20 +78,22 @@ def main(args):
             server = signin(data['site_name'],
                             data['is_site_default'], data['server_url'])
 
-            if data['project_path'] is None:
-                raiseError(
-                    f"The project project_path field is Null in JSON Template.", file_path)
-            else:
-                # Step 2: Get all the projects on server, then look for the required one.
-                project_id = getProject(
-                    server, data['project_path'], data['file_path'])
+            updateProjectPermissions(data['project_path'])
+            
+            # if data['project_path'] is None:
+            #     raiseError(
+            #         f"The project project_path field is Null in JSON Template.", file_path)
+            # else:
+            #     # Step 2: Get all the projects on server, then look for the required one.
+            #     project_id = getProject(
+            #         server, data['project_path'], data['file_path'])
 
-                # Step 3: Form a new workbook item and publish.
-                publishWB(server, data['file_path'], data['name'], project_id,
-                          data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
+            #     # Step 3: Form a new workbook item and publish.
+            #     publishWB(server, data['file_path'], data['name'], project_id,
+            #               data['show_tabs'], data['hidden_views'], data['tags'], data['project_path'], data['site_name'])
 
-                # Step 4: Sign Out to the Tableau Server
-                server.auth.sign_out()
+            #     # Step 4: Sign Out to the Tableau Server
+            server.auth.sign_out()
 
     except Exception as e:
         print("Workbook not published.\n", e)
