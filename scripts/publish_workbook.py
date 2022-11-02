@@ -78,7 +78,6 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.ExportImage: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Filter: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.ProjectLeader: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Read: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ShareView: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
