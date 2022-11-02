@@ -64,11 +64,7 @@ def updateProjectPermissions(server, project_path):
     for default_permissions in project.default_workbook_permissions:
         # Add workbook capability to "All Users" default group if it does not already exist
         new_capabilities = {
-            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
-        }
-
-        new_capabilities = {
-            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
         }
 
         # Each PermissionRule in the list contains a grantee and a dict of capabilities
