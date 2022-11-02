@@ -64,19 +64,6 @@
       "description": "",
       "is_site_default": false,
       "server_url": "https://tableau.devinvh.com/"
-    },
-    {
-      "name": "Sample",
-      "site_id": "e4fc3628-68b4-4a72-a956-9fc3c02192f4",
-      "site_name": "DataLab",
-      "file_path": "Sample.twb",
-      "project_path": "Default",
-      "tags": [],
-      "hidden_views": [],
-      "show_tabs": true,
-      "description": "",
-      "is_site_default": false,
-      "server_url": "https://tableau.devinvh.com/"
     }
   ]
 }
