@@ -60,11 +60,11 @@ def updateProjectPermissions(server, project_path):
     
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
-    default_permissions = project.default_workbook_permissions[0] 
+    default_permissions = project.default_workbook_permissions[1] 
     
     # new projects have 1 grantee group
-    for i in project.default_workbook_permissions:
-        print("default_permissions grantee ::", pprint(vars(i.grantee)))
+    # for i in project.default_workbook_permissions:
+    #     print("default_permissions grantee ::", pprint(vars(i.grantee)))
 
     # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
     new_capabilities = {
@@ -83,7 +83,7 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
+        TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Deny,
     }
 
     # Each PermissionRule in the list contains a grantee and a dict of capabilities
