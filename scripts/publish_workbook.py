@@ -82,7 +82,6 @@ def updateProjectPermissions(server, project_path):
         TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ViewUnderlyingData: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.Write: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.RunExplainData: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Deny,
     }
 
