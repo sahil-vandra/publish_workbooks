@@ -63,8 +63,10 @@ def updateProjectPermissions(server, project_path):
 
     # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
     new_capabilities = {
-        TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.CreateRefreshMetrics: TSC.Permission.Mode.Allow,
+        TSC.Permission.Capability.WebAuthoring: TSC.Permission.Mode.Allow,
+        TSC.Permission.Capability.SaveAs: TSC.Permission.Mode.Allow,
+        TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow, 
+        TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
     }
 
     # Each PermissionRule in the list contains a grantee and a dict of capabilities
