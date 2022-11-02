@@ -53,19 +53,47 @@ def publishWB(server, file_path, name, project_id, show_tabs, hidden_views, tags
 
 def updateProjectPermissions(server, project_path):
     all_projects, pagination_item = server.projects.get()
-    project_item = next(
+    project = next(
         (project for project in all_projects if project.name == project_path), None)
 
-    capabilities = {
-        TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
-    }
+    # Query for existing workbook default-permissions
+    server.projects.populate_workbook_default_permissions(project)
+    # new projects have 1 grantee group
+    default_permissions = project.default_workbook_permissions[0]
 
-    rules = TSC.PermissionsRule(
-        grantee=project_item,
-        capabilities=capabilities
-    )
+    # Add "ExportXml (Allow)" workbook capability to "All Users" default group if it does not already exist
+    if TSC.Permission.Capability.ExportXml not in default_permissions.capabilities:
+        new_capabilities = {
+            TSC.Permission.Capability.ExportXml: TSC.Permission.Mode.Allow,
+            TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
+        }
 
-    server.projects.update_workbook_default_permissions(project_item, [rules])
+        # Each PermissionRule in the list contains a grantee and a dict of capabilities
+        new_rules = [TSC.PermissionsRule(
+            grantee=default_permissions.grantee, capabilities=new_capabilities)]
+
+        new_default_permissions = server.projects.update_workbook_default_permissions(
+            project, new_rules)
+
+        # Print result from adding a new default permission
+        for permission in new_default_permissions:
+            grantee = permission.grantee
+            capabilities = permission.capabilities
+            print(f"\nCapabilities for {grantee.tag_name} {grantee.id}:")
+
+            for capability in capabilities:
+                print(f"\t{capability} - {capabilities[capability]}")
+
+    # capabilities = {
+    #     TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow
+    # }
+
+    # rules = TSC.PermissionsRule(
+    #     grantee=project_item,
+    #     capabilities=capabilities
+    # )
+
+    # server.projects.update_workbook_default_permissions(project_item, [rules])
 
 
 def main(args):
