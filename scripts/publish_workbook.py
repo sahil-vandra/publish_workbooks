@@ -56,6 +56,8 @@ def updateProjectPermissions(server, project_path):
     project = next(
         (project for project in all_projects if project.name == project_path), None)
 
+    print(f"project name:{project.name} and id: {project.id}")
+    
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
     
@@ -68,7 +70,7 @@ def updateProjectPermissions(server, project_path):
     new_capabilities = {
         TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
         TSC.Permission.Capability.ViewComments: TSC.Permission.Mode.Allow,
-        TSC.Permission.Capability.Delete: TSC.Permission.Mode.Allow, 
+        TSC.Permission.Capability.Delete: TSC.Permission.Mode.Deny, 
         TSC.Permission.Capability.ChangePermissions: TSC.Permission.Mode.Allow,
     }
 
