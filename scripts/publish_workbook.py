@@ -64,12 +64,12 @@ def updateProjectPermissions(server, project_path):
 
     for default_permissions in project.default_workbook_permissions:
         # Delete permisssion
-        new_capabilities = {
+        capabilities = {
             TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
         }
 
         new_rules = [TSC.PermissionsRule(
-            capabilities=new_capabilities, grantee=default_permissions.grantee)]
+            capabilities=capabilities, grantee=default_permissions.grantee)]
 
         new_default_permissions = server.projects.delete_workbook_default_permissions(
             project, new_rules)
