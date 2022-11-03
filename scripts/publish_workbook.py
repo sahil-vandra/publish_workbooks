@@ -63,6 +63,7 @@ def updateProjectPermissions(server, project_path):
     server.projects.populate_workbook_default_permissions(project)
 
     for default_permissions in project.default_workbook_permissions:
+        
         new_capabilities = {
             TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Allow,
         }
