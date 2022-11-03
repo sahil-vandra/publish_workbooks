@@ -62,18 +62,8 @@ def updateProjectPermissions(server, project_path):
     # Query for existing workbook default-permissions
     server.projects.populate_workbook_default_permissions(project)
 
-    # Delete permisssion
-    capabilities = {
-        TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
-    }
-
-    new_rules = [TSC.PermissionsRule(
-        capabilities=capabilities, grantee=project.default_workbook_permissions.grantee)]
-
-    new_default_permissions = server.projects.delete_workbook_default_permissions(
-        project, new_rules)
-    # for default_permissions in project.default_workbook_permissions:
-        # # Delete permisssion
+    for default_permissions in project.default_workbook_permissions:
+        # Delete permisssion
         # capabilities = {
         #     TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
         # }
@@ -85,15 +75,15 @@ def updateProjectPermissions(server, project_path):
         #     project, new_rules)
 
         # Update permisssion
-        # new_capabilities = {
-        #     TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
-        # }
+        new_capabilities = {
+            TSC.Permission.Capability.AddComment: TSC.Permission.Mode.Deny,
+        }
 
-        # new_rules = [TSC.PermissionsRule(
-        #     grantee=default_permissions.grantee, capabilities=new_capabilities)]
+        new_rules = [TSC.PermissionsRule(
+            grantee=default_permissions.grantee, capabilities=new_capabilities)]
 
-        # new_default_permissions = server.projects.update_workbook_default_permissions(
-        #     project, new_rules)
+        new_default_permissions = server.projects.update_workbook_default_permissions(
+            project, new_rules)
 
     # Print result from adding a new default permission
     for permission in new_default_permissions:
