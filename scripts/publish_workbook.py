@@ -68,7 +68,7 @@ def updateProjectPermissions(server, project_path):
     }
 
     new_rules = [TSC.PermissionsRule(
-        capabilities=capabilities, grantee=default_permissions.grantee)]
+        capabilities=capabilities, grantee=project.default_workbook_permissions.grantee)]
 
     new_default_permissions = server.projects.delete_workbook_default_permissions(
         project, new_rules)
