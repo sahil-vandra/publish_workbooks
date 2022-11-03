@@ -74,7 +74,7 @@ def updateProjectPermissions(server, project_path):
     )
 
     print("2")
-    server.projects.delete_workbook_default_permissions(project, [rules])
+    server.projects.delete_workbook_default_permissions(project, rules)
 
     print("3")
     # Update permisssion
